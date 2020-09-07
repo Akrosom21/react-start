@@ -1,0 +1,21 @@
+.side {
+    width: 320px;
+    background: rgb(126, 91, 233);
+    margin-right: 20px;
+  }
+  
+.nav {
+  position: sticky;
+  top: 10px;
+}
+
+  .nav__item {
+    list-style-type: none;
+    margin-bottom: 20px;
+  }
+  
+  .nav__link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+  }

@@ -1,0 +1,14 @@
+.user {
+  padding: 10px;
+}
+
+.userLink {
+  text-decoration: none;
+  color: #47525E;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.messages__userLink_active {
+  color: cornflowerblue;
+}

@@ -1,0 +1,17 @@
+.content__title {
+    font-size: 26px;
+    color: #47525E;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.messages__inner {
+    display: flex;
+}
+
+.messages__users {
+    width: 300px;
+    margin-right: 20px;
+    padding-right: 20px;
+    border-right: 1px solid #7E55F3;
+}

@@ -1,5 +1,5 @@
 .side {
-    width: 320px;
+    min-width: 320px;
     background: rgb(126, 91, 233);
     margin-right: 20px;
   }
@@ -18,4 +18,7 @@
     text-decoration: none;
     color: #fff;
     font-size: 20px;
+  }
+  .nav__link_active {
+    color: chartreuse;
   }

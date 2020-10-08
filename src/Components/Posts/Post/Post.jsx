@@ -1,14 +1,13 @@
-import React from 'react';
-import classes from './Post.module.css';
-import avatar from '../../../img/ava.jfif';
+import React from "react";
+import classes from "./Post.module.css";
 
-function Post() {
-    return (
-        <div className={classes.post}>
-          <img src={avatar} alt="" className={classes.post__img} />
-          <div className={classes.post__text}>Hello</div>
-        </div>
-    )
+function Post(props) {
+  return (
+    <div className={classes.post}>
+      <img src={props.avatar} alt="" className={classes.post__img} />
+      <div className={classes.post__text}>{props.message}</div>
+    </div>
+  );
 }
 
 export default Post;

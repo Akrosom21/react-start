@@ -9,13 +9,7 @@ function App(props) {
     <BrowserRouter>
       <div className="wrapper">
         <Header />
-        <Main 
-        userData={props.state.messagesPage.userData} 
-        dialogData={props.state.messagesPage.dialogData} 
-        dialogSymbol={props.state.messagesPage.dialogSymbol} 
-        postData={props.state.profilePage.postData}
-        postSymbol={props.state.profilePage.postSymbol}
-        dispatch={props.dispatch} />
+        <Main store={props.store} />
       </div>
     </BrowserRouter>
   );

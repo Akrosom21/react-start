@@ -13,12 +13,12 @@ function Posts(props) {
   let getPostText = React.createRef();
 
   let addPost = () => {
-    props.dispatch(addPostActionCreator());
+    props.addPost();
   }
 
   let changeSymbol = () => {
     let postText = getPostText.current.value;
-    props.dispatch(addSymbolActionCreator(postText));
+    props.changeSymbol(postText);
   }
 
   return (

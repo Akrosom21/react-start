@@ -3,6 +3,7 @@ import profileBg from "../../img/profile_bg.webp";
 import profilePhoto from "../../img/profile.png";
 import classes from "./Profile.module.css";
 import Posts from "../Posts/Posts.jsx";
+import PostsContainer from "../Posts/PostsContainer";
 
 
 function Profile(props) {
@@ -41,10 +42,8 @@ function Profile(props) {
           </div>
         </div>
       </div>
-      <Posts
-       postDataArray= {props.postData} 
-       postSymbol={props.postSymbol}
-       dispatch={props.dispatch} />
+      <PostsContainer
+          store={props.store} />
     </div>
   );
 }

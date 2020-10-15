@@ -4,6 +4,7 @@ import Profile from "../Profile/Profile.jsx";
 import Messages from "../Messages/Messages.jsx";
 import classes from "./Main.module.css";
 import { Route } from "react-router-dom";
+import MessagesContainer from "../Messages/MessagesContainer";
 
 function Main(props) {
   return (
@@ -12,19 +13,14 @@ function Main(props) {
       <div className="content">
         <Route
           path="/profile"
-          render={() => <Profile 
-          postData={props.postData} 
-          postSymbol={props.postSymbol}
-          dispatch={props.dispatch} />}
+          render={() => <Profile
+              store={props.store} />}
         />
         <Route
           path="/messages"
           render={() => (
-            <Messages
-              userDataArray={props.userData}
-              dialogDataArray={props.dialogData}
-              dialogSymbol={props.dialogSymbol}
-              dispatch={props.dispatch}
+            <MessagesContainer
+                store={props.store}
             />
           )}
         />

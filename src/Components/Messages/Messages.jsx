@@ -15,11 +15,11 @@ function Messages(props) {
 
   let changeMessageText = (e) => {
     let messageText = e.target.value;
-   props.dispatch(addDialogSymbolActionCreator(messageText));
+   props.changeMessageText(messageText);
   }
 
   let sendMessage = () => {
-    props.dispatch(addDialogMessageActionCreator());
+    props.sendMessage();
   }
 
   return (

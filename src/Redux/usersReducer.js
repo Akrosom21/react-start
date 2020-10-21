@@ -13,7 +13,7 @@ export const setUsersNumberAC = (usersNumber) => ({type: setUsersNumber, usersNu
 let initialStore = {
     users: [],
     usersNumber: 21,
-    usersInPage: 20,
+    usersInPage: 5,
     currentPage: 1,
 }
 

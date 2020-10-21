@@ -9,7 +9,7 @@ function App(props) {
     <BrowserRouter>
       <div className="wrapper">
         <Header />
-        <Main store={props.store} />
+        <Main />
       </div>
     </BrowserRouter>
   );

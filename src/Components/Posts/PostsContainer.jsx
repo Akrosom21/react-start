@@ -1,28 +1,26 @@
-import React from "react";
-import Post from "./Post/Post.jsx";
-import classes from "./Posts.module.css";
 import "../../App.css";
 import {addPostActionCreator, addSymbolActionCreator} from "../../Redux/profileReducer"
 import Posts from "./Posts";
+import {connect} from "react-redux";
 
-function PostsContainer(props) {
-
-    let state = props.store.getState();
-
-  let addPost = () => {
-    props.store.dispatch(addPostActionCreator());
-  }
-
-  let changeSymbol = (postText) => {
-    props.store.dispatch(addSymbolActionCreator(postText));
-  }
-debugger;
-  return (
-    <Posts addPost={addPost}
-           changeSymbol={changeSymbol}
-           postSymbol={state.profilePage.postSymbol}
-           postDataArray={state.profilePage.postData} />
-  );
+const mapStateToProps = (state) => {
+    return {
+        postSymbol: state.profilePage.postSymbol,
+        postDataArray: state.profilePage.postData
+    }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addPost: () => {
+            dispatch(addPostActionCreator());
+        },
+        changeSymbol: (postText) => {
+            dispatch(addSymbolActionCreator(postText));
+        }
+    }
+}
+
+const PostsContainer = connect(mapStateToProps, mapDispatchToProps)(Posts);
 
 export default PostsContainer;

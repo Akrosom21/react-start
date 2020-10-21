@@ -8,25 +8,31 @@ let initialStore = {
         {message: 'Hello'},
         {message: 'How are you?'},
         {message: 'Where are you from?'}
-      ],
-      dialogSymbol: '',
-      userData: [
+    ],
+    dialogSymbol: '',
+    userData: [
         {name: 'Andrey', id: 1},
         {name: 'Anna', id: 2},
         {name: 'Kiril', id: 3},
         {name: 'Sasha', id: 4}
-      ]  
+    ]
 }
 
 const messagesReducer = (state = initialStore, action) => {
+    let stateCopy = {...state};
     if (action.type === addDialogSymbol) {
-        state.dialogSymbol = action.inputDialogSymbol;
+        return {
+            ...state,
+            dialogSymbol: action.inputDialogSymbol,
+        }
+    } else if (action.type === addDialogMessage) {
+        return {
+            ...state,
+            dialogData: [...state.dialogData, {message: stateCopy.dialogSymbol}],
+            dialogSymbol: '',
+        }
     }
-    else if (action.type === addDialogMessage) {
-        state.dialogData.push({message: state.dialogSymbol});
-        state.dialogSymbol = '';
-    }
-    return state;
+    return stateCopy;
 }
 
 export default messagesReducer;

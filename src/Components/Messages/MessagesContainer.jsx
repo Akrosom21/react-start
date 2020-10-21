@@ -1,30 +1,26 @@
-import React from "react";
-import User from "./User/User.jsx";
-import Dialog from "./Dialog/Dialog.jsx";
-import classes from "./Messages.module.css";
 import {addDialogSymbolActionCreator, addDialogMessageActionCreator} from "../../Redux/messagesReduser";
 import Messages from "./Messages";
+import {connect} from "react-redux";
 
-function MessagesContainer(props) {
-
-  let state = props.store.getState();
-
-  let changeMessageText = (messageText) => {
-   props.store.dispatch(addDialogSymbolActionCreator(messageText));
-  }
-
-  let sendMessage = () => {
-    props.store.dispatch(addDialogMessageActionCreator());
-  }
-
-  return (
-    <Messages sendMessage={sendMessage}
-              changeMessageText={changeMessageText}
-              userDataArray={state.messagesPage.userData}
-              dialogSymbol={state.messagesPage.dialogSymbol}
-              dialogDataArray={state.messagesPage.dialogData}
-    />
-  );
+const mapStateToProps = (state) => {
+    return {
+        userDataArray: state.messagesPage.userData,
+        dialogSymbol: state.messagesPage.dialogSymbol,
+        dialogDataArray: state.messagesPage.dialogData
+    }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        sendMessage: () => {
+            dispatch(addDialogMessageActionCreator());
+        },
+        changeMessageText: (messageText) => {
+            dispatch(addDialogSymbolActionCreator(messageText));
+        }
+    }
+}
+
+const MessagesContainer = connect(mapStateToProps, mapDispatchToProps)(Messages);
 
 export default MessagesContainer;

@@ -8,28 +8,35 @@ export const addSymbolActionCreator = (postText) => ({type: addSymbol, inputSymb
 
 let initialStore = {
     postData: [
-        { message: "Hello", avatar: avatar001 },
-        { message: "It's my first post", avatar: avatar002 },
-        { message: "How's it going?", avatar: avatar001 },
-        { message: "Cool site!", avatar: avatar002 },
-      ],
-      postSymbol: ''
+        {message: "Hello", avatar: avatar001},
+        {message: "It's my first post", avatar: avatar002},
+        {message: "How's it going?", avatar: avatar001},
+        {message: "Cool site!", avatar: avatar002},
+    ],
+    postSymbol: ''
 }
 
 const profileReducer = (state = initialStore, action) => {
+    let stateCopy = {...state};
+
     if (action.type === addPost) {
         let newMessage = {
             message: state.postSymbol,
             avatar: avatar002
         }
-        state.postData.push(newMessage);
-        state.postSymbol = '';
-    }
-    else if (action.type === addSymbol) {
-        state.postSymbol = action.inputSymbol;
+        return {
+            ...state,
+            postData: [...state.postData, newMessage],
+            postSymbol: '',
+        }
+    } else if (action.type === addSymbol) {
+        return {
+            ...state,
+            postSymbol: action.inputSymbol,
+        }
     }
 
-    return state;
+    return stateCopy;
 }
 
 export default profileReducer;

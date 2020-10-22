@@ -12,7 +12,7 @@ import React from "react";
 import * as axios from "axios";
 import Preloader from "../Common/Preloader/Preloader";
 
-class UsersContainerInner extends React.Component {
+class UsersContainer extends React.Component {
 
     componentDidMount() {
         this.props.fetchingShowPreloader(true)
@@ -87,6 +87,11 @@ const mapStateToProps = (state) => {
 //     }
 // }
 
-const UsersContainer = connect(mapStateToProps, {follow, unfollow, setUsers, changePage, setUsersNumber, fetchingShowPreloader})(UsersContainerInner)
-
-export default UsersContainer
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    changePage,
+    setUsersNumber,
+    fetchingShowPreloader
+})(UsersContainer)

@@ -1,0 +1,35 @@
+.profile__bg_img {
+  height: 200px;
+  width: 100%;
+}
+
+.profile__info {
+  display: flex;
+  margin-top: 50px;
+}
+
+.profile__photo {
+  width: 150px;
+  height: 150px;
+  margin-right: 20px;
+}
+
+.profile__name {
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.profile__desc-text {
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.profile__desc-text span {
+  font-weight: normal;
+}
+
+.profile__desc-text span a {
+  text-decoration: none;
+}

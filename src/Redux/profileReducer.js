@@ -3,8 +3,10 @@ import avatar002 from "../img/ava002.jfif";
 
 const addPost = 'ADD-POST';
 const addSymbol = 'ADD-SYMBOL';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 export const addPostActionCreator = () => ({type: addPost});
 export const addSymbolActionCreator = (postText) => ({type: addSymbol, inputSymbol: postText});
+export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 
 let initialStore = {
     postData: [
@@ -13,7 +15,8 @@ let initialStore = {
         {message: "How's it going?", avatar: avatar001},
         {message: "Cool site!", avatar: avatar002},
     ],
-    postSymbol: ''
+    postSymbol: '',
+    profile: null,
 }
 
 const profileReducer = (state = initialStore, action) => {
@@ -33,6 +36,12 @@ const profileReducer = (state = initialStore, action) => {
         return {
             ...state,
             postSymbol: action.inputSymbol,
+        }
+    }
+    else if (action.type === SET_USER_PROFILE) {
+        return {
+            ...state,
+            profile: action.profile
         }
     }
 

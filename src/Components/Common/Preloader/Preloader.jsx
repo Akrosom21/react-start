@@ -4,9 +4,9 @@ import preloaderGif from '../../../img/preloader.svg';
 
 function Preloader(props) {
     return (
-        <div>
+        <>
             <img src={preloaderGif} alt="preloader" className={classes.preloader}/>
-        </div>
+        </>
     )
 }
 

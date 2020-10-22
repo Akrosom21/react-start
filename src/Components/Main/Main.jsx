@@ -5,6 +5,7 @@ import classes from "./Main.module.css";
 import {Route} from "react-router-dom";
 import MessagesContainer from "../Messages/MessagesContainer";
 import UsersContainer from "../Users/UsersContainer";
+import ProfileContainer from "../Profile/ProfileContainer";
 
 function Main(props) {
     return (
@@ -13,7 +14,7 @@ function Main(props) {
             <div className="content">
                 <Route
                     path="/profile"
-                    render={() => <Profile/>}
+                    render={() => <ProfileContainer/>}
                 />
                 <Route
                     path="/messages"

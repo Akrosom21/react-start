@@ -1,6 +1,7 @@
 import React from "react";
 import classes from './Person.module.css'
 import profileImg from '../../../img/profile.png'
+import {NavLink} from "react-router-dom";
 
 
 function Person(props) {
@@ -14,11 +15,11 @@ function Person(props) {
     return (
         <div className="classes.person">
             <div className="classes.person__intro">
-                <a href="#" className="classes.person__link">
+                <NavLink to={'/profile/' + props.userID} className="classes.person__link">
                     <img
                         src={props.photo != null ? props.photo : profileImg}
                         alt="photo" className="classes.person__img"/>
-                </a>
+                </NavLink>
                 { props.followed ?
                     <button onClick={follow} className="classes.follow_btn">FOLLOW</button> :
                     <button onClick={unfollow} className="classes.follow_btn">UNFOLLOW</button>

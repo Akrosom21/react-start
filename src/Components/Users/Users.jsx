@@ -20,11 +20,11 @@ function Users(props) {
                 unfollow={props.unfollow}/>))
 
     return (
-        <div className="classes.users">
-            <div className="classes.pagination">
+        <div className={classes.users}>
+            <div className={classes.pagination}>
                 {paginationItems}
             </div>
-            <div className="classes.users__inner">
+            <div className={classes.users__inner}>
                 {personal}
             </div>
         </div>

@@ -13,7 +13,7 @@ function Main(props) {
             <Menu/>
             <div className="content">
                 <Route
-                    path="/profile"
+                    path="/profile/:userID?"
                     render={() => <ProfileContainer/>}
                 />
                 <Route

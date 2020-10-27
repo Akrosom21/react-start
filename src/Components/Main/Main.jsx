@@ -1,6 +1,5 @@
 import React from "react";
 import Menu from "../Menu/Menu.jsx";
-import Profile from "../Profile/Profile.jsx";
 import classes from "./Main.module.css";
 import {Route} from "react-router-dom";
 import MessagesContainer from "../Messages/MessagesContainer";

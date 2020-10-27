@@ -6,21 +6,21 @@ import {
     setUsers,
     setUsersNumber,
     fetchingShowPreloader,
-    unfollow
+    unfollow, disableBtn
 } from "../../Redux/usersReducer";
 import React from "react";
-import * as axios from "axios";
 import Preloader from "../Common/Preloader/Preloader";
+import {userAPI} from "../../API/api";
 
 class UsersContainer extends React.Component {
 
     componentDidMount() {
         this.props.fetchingShowPreloader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.usersInPage}`)
-            .then(response => {
+        userAPI.getUsers(this.props.currentPage, this.props.usersInPage)
+            .then(data => {
                 this.props.fetchingShowPreloader(false)
-                this.props.setUsers(response.data.items)
-                let reduceCount = response.data.totalCount - (response.data.totalCount - 50)
+                this.props.setUsers(data.items)
+                let reduceCount = data.totalCount - (data.totalCount - 50)
                 this.props.setUsersNumber(reduceCount)
             });
     }
@@ -28,10 +28,10 @@ class UsersContainer extends React.Component {
     onChangePage = (page) => {
         this.props.changePage(page)
         this.props.fetchingShowPreloader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.usersInPage}`)
-            .then(response => {
+        userAPI.getUsersPage(page, this.props.usersInPage)
+            .then(data => {
                 this.props.fetchingShowPreloader(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             });
     }
 
@@ -48,6 +48,9 @@ class UsersContainer extends React.Component {
                     usersArr={this.props.usersArr}
                     follow={this.props.follow}
                     unfollow={this.props.unfollow}
+                    disableBtn={this.props.disableBtn}
+                    isDisableBtn={this.props.isDisableBtn}
+
                 />
             </>
         )
@@ -60,7 +63,8 @@ const mapStateToProps = (state) => {
         usersInPage: state.usersPage.usersInPage,
         usersNumber: state.usersPage.usersNumber,
         currentPage: state.usersPage.currentPage,
-        showPreloader: state.usersPage.showPreloader
+        showPreloader: state.usersPage.showPreloader,
+        isDisableBtn: state.usersPage.isDisableBtn
     }
 }
 
@@ -93,5 +97,6 @@ export default connect(mapStateToProps, {
     setUsers,
     changePage,
     setUsersNumber,
-    fetchingShowPreloader
+    fetchingShowPreloader,
+    disableBtn
 })(UsersContainer)

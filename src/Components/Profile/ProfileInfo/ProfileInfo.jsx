@@ -22,7 +22,7 @@ function ProfileInfo(props) {
                 <div className={classes.profile__info}>
                     <img
                         src={props.profile.photos.small != null ? props.profile.photos.small : profileImg}
-                        alt="photo"
+                        alt="profile"
                         className={classes.profile__photo}
                     />
                     <div className={classes.profile__desc}>

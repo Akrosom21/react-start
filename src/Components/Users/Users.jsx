@@ -10,14 +10,14 @@ function Users(props) {
     }
 
     let paginationItems = pagesArr.map(p => (
-        <span onClick={() => props.onChangePage(p)}
-                     className={props.currentPage === p && classes.pagination__current}>{p}</span>
+         <span key={p} onClick={() => props.onChangePage(p)} className={props.currentPage === p ? classes.pagination__current : null}>{p}</span>
     ))
 
     let personal = props.usersArr.map((p) => (
         <Person key={p.id} userID={p.id} photo={p.photos.small} fullName={p.name} status={p.status}
                 country={'p.location.country'} city={'p.location.city'} followed={p.followed} follow={props.follow}
-                unfollow={props.unfollow}/>))
+                unfollow={props.unfollow} disableBtn={props.disableBtn}
+                isDisableBtn={props.isDisableBtn}/>))
 
     return (
         <div className={classes.users}>

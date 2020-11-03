@@ -2,30 +2,15 @@ import React from "react";
 import classes from './Person.module.css'
 import profileImg from '../../../img/profile.png'
 import {NavLink} from "react-router-dom";
-import {userAPI} from "../../../API/api";
 
 
 function Person(props) {
 
     let follow = () => {
-        props.disableBtn(true, props.userID)
-        userAPI.follow(props.userID)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    props.follow(props.userID)
-                }
-                props.disableBtn(false,props.userID)
-            })
+        props.setFollow(props.userID)
     }
     let unfollow = () => {
-        props.disableBtn(true, props.userID)
-        userAPI.unfollow(props.userID)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    props.unfollow(props.userID)
-                }
-                props.disableBtn(false, props.userID)
-            })
+        props.setUnfollow(props.userID)
     }
     return (
         <div className="classes.person">

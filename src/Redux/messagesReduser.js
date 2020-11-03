@@ -3,7 +3,7 @@ const addDialogMessage = 'ADD-DIALOG-MESSAGE';
 export const addDialogMessageActionCreator = () => ({type: addDialogMessage});
 export const addDialogSymbolActionCreator = (messageText) => ({type: addDialogSymbol, inputDialogSymbol: messageText});
 
-let initialStore = {
+let initialState = {
     dialogData: [
         {message: 'Hello'},
         {message: 'How are you?'},
@@ -18,7 +18,7 @@ let initialStore = {
     ]
 }
 
-const messagesReducer = (state = initialStore, action) => {
+const messagesReducer = (state = initialState, action) => {
     let stateCopy = {...state};
     if (action.type === addDialogSymbol) {
         return {

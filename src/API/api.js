@@ -36,3 +36,11 @@ export const profileAPI = {
             .then(response => response.data)
     }
 }
+
+export const authAPI = {
+    setAuth() {
+        return axiosInstance.get('auth/me')
+            .then(response => response.data)
+    }
+
+}

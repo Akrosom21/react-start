@@ -1,14 +1,19 @@
+import {authAPI} from "../API/api";
+
 const SET_AUTH_DATA = 'SET_AUTH_DATA';
 const SET_IS_AUTH = 'SET_IS_AUTH';
+
+//Action Creators
 export const setAuthData = (data) => ({type: SET_AUTH_DATA, data});
 export const setIsAuth = (isAuth) => ({type: SET_IS_AUTH, isAuth});
 
-let initialStore = {
+//Initial State
+let initialState = {
     authData: {id: null, login: null, email: null},
     resultCode: false,
 }
 
-const authReducer = (state = initialStore, action) => {
+const authReducer = (state = initialState, action) => {
     let stateCopy = {...state};
 
     if (action.type === SET_AUTH_DATA) {
@@ -24,6 +29,19 @@ const authReducer = (state = initialStore, action) => {
         }
     }
     return stateCopy;
+}
+
+//Thunk
+export const setAuth = () => {
+    return (dispatch) => {
+        authAPI.setAuth()
+            .then(data => {
+                dispatch(setAuthData(data.data))
+                if (data.resultCode === 0) {
+                    dispatch(setIsAuth(true))
+                }
+            })
+    }
 }
 
 export default authReducer;

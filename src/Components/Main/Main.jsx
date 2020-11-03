@@ -5,6 +5,7 @@ import {Route} from "react-router-dom";
 import MessagesContainer from "../Messages/MessagesContainer";
 import UsersContainer from "../Users/UsersContainer";
 import ProfileContainer from "../Profile/ProfileContainer";
+import Login from "../Login/Login";
 
 function Main(props) {
     return (
@@ -22,6 +23,7 @@ function Main(props) {
                     )}
                 />
                 <Route path='/users' render={() => (<UsersContainer/>)}/>
+                <Route path='/login' render={() => (<Login/>)}/>
             </div>
         </main>
     );

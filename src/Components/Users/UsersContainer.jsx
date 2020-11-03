@@ -1,38 +1,17 @@
 import {connect} from "react-redux";
 import Users from "./Users";
-import {
-    changePage,
-    follow,
-    setUsers,
-    setUsersNumber,
-    fetchingShowPreloader,
-    unfollow, disableBtn
-} from "../../Redux/usersReducer";
+import {getUsers, getUsersPage, setFollow, setUnfollow} from "../../Redux/usersReducer";
 import React from "react";
 import Preloader from "../Common/Preloader/Preloader";
-import {userAPI} from "../../API/api";
 
 class UsersContainer extends React.Component {
 
     componentDidMount() {
-        this.props.fetchingShowPreloader(true)
-        userAPI.getUsers(this.props.currentPage, this.props.usersInPage)
-            .then(data => {
-                this.props.fetchingShowPreloader(false)
-                this.props.setUsers(data.items)
-                let reduceCount = data.totalCount - (data.totalCount - 50)
-                this.props.setUsersNumber(reduceCount)
-            });
+        this.props.getUsers(this.props.currentPage, this.props.usersInPage)
     }
 
     onChangePage = (page) => {
-        this.props.changePage(page)
-        this.props.fetchingShowPreloader(true)
-        userAPI.getUsersPage(page, this.props.usersInPage)
-            .then(data => {
-                this.props.fetchingShowPreloader(false)
-                this.props.setUsers(data.items)
-            });
+        this.props.getUsersPage(page, this.props.usersInPage)
     }
 
     render() {
@@ -46,10 +25,9 @@ class UsersContainer extends React.Component {
                     onChangePage={this.onChangePage}
                     currentPage={this.props.currentPage}
                     usersArr={this.props.usersArr}
-                    follow={this.props.follow}
-                    unfollow={this.props.unfollow}
-                    disableBtn={this.props.disableBtn}
                     isDisableBtn={this.props.isDisableBtn}
+                    setFollow={this.props.setFollow}
+                    setUnfollow={this.props.setUnfollow}
 
                 />
             </>
@@ -92,11 +70,8 @@ const mapStateToProps = (state) => {
 // }
 
 export default connect(mapStateToProps, {
-    follow,
-    unfollow,
-    setUsers,
-    changePage,
-    setUsersNumber,
-    fetchingShowPreloader,
-    disableBtn
+    getUsers,
+    getUsersPage,
+    setFollow,
+    setUnfollow
 })(UsersContainer)

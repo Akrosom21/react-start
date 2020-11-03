@@ -1,14 +1,18 @@
 import avatar001 from "../img/ava.jfif";
 import avatar002 from "../img/ava002.jfif";
+import {profileAPI} from "../API/api";
 
 const addPost = 'ADD-POST';
 const addSymbol = 'ADD-SYMBOL';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+
+//Action Creators
 export const addPostActionCreator = () => ({type: addPost});
 export const addSymbolActionCreator = (postText) => ({type: addSymbol, inputSymbol: postText});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 
-let initialStore = {
+//Initial State
+let initialState = {
     postData: [
         {message: "Hello", avatar: avatar001},
         {message: "It's my first post", avatar: avatar002},
@@ -19,7 +23,7 @@ let initialStore = {
     profile: null,
 }
 
-const profileReducer = (state = initialStore, action) => {
+const profileReducer = (state = initialState, action) => {
     let stateCopy = {...state};
 
     if (action.type === addPost) {
@@ -46,6 +50,20 @@ const profileReducer = (state = initialStore, action) => {
     }
 
     return stateCopy;
+}
+
+//Thunk
+export const getProfile = (userID) => {
+    return (dispatch) => {
+        let withRouterUserID = userID
+        if (!withRouterUserID) {
+            withRouterUserID = 2
+        }
+        profileAPI.getProfile(withRouterUserID)
+            .then(data => {
+                dispatch(setUserProfile(data))
+            })
+    }
 }
 
 export default profileReducer;

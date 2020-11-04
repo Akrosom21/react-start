@@ -22,7 +22,6 @@ function Messages(props) {
         props.sendMessage();
     }
 
-    if(!props.resultCode) return <Redirect to='/login'/>
     return (
         <div>
             <div className={classes.content__title}>Messages</div>

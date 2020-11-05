@@ -4,6 +4,7 @@ import classes from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import profileImg from "../../../img/profile.png";
 import ProfileStatus from "../ProfileStatus/ProfileStatus";
+import {updateStatus} from "../../../Redux/profileReducer";
 
 
 function ProfileInfo(props) {
@@ -28,7 +29,7 @@ function ProfileInfo(props) {
                 />
                 <div className={classes.profile__desc}>
                     <div className={classes.profile__name}>{props.profile.fullName}</div>
-                    <ProfileStatus status={'Hello!!!'}/>
+                    <ProfileStatus status={'Hello!!!'} profileStatus={props.profileStatus} updateStatus={props.updateStatus}/>
                     <div className={classes.profile__desc_text}>
                         About Me: <span>{props.profile.aboutMe}</span>
                     </div>

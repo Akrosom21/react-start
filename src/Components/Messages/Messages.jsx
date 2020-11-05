@@ -2,7 +2,6 @@ import React from "react";
 import User from "./User/User.jsx";
 import Dialog from "./Dialog/Dialog.jsx";
 import classes from "./Messages.module.css";
-import {Redirect} from "react-router-dom";
 
 function Messages(props) {
     let userElements = props.userDataArray.map((el) => (

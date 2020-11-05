@@ -34,6 +34,13 @@ export const profileAPI = {
     getProfile(withRouterUserID) {
         return axiosInstance.get('profile/' + withRouterUserID)
             .then(response => response.data)
+    },
+    getProfileStatus(userID) {
+        return axiosInstance.get('/profile/status/' + userID)
+            .then(response => response.data)
+    },
+    updateProfileStatus(status) {
+        return axiosInstance.put('/profile/status/', {status: status})
     }
 }
 

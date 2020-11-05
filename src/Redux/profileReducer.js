@@ -5,11 +5,13 @@ import {profileAPI} from "../API/api";
 const addPost = 'ADD-POST';
 const addSymbol = 'ADD-SYMBOL';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
 
 //Action Creators
 export const addPostActionCreator = () => ({type: addPost});
 export const addSymbolActionCreator = (postText) => ({type: addSymbol, inputSymbol: postText});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
+export const setProfileStatus = (status) => ({type: SET_PROFILE_STATUS, status});
 
 //Initial State
 let initialState = {
@@ -21,6 +23,7 @@ let initialState = {
     ],
     postSymbol: '',
     profile: null,
+    profileStatus: 'initial status',
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -48,6 +51,12 @@ const profileReducer = (state = initialState, action) => {
             profile: action.profile
         }
     }
+    else if (action.type === SET_PROFILE_STATUS) {
+        return {
+            ...state,
+            profileStatus: action.status
+        }
+    }
 
     return stateCopy;
 }
@@ -62,6 +71,26 @@ export const getProfile = (userID) => {
         profileAPI.getProfile(withRouterUserID)
             .then(data => {
                 dispatch(setUserProfile(data))
+            })
+    }
+}
+
+export const setStatus = (userID) => {
+    return (dispatch) => {
+        profileAPI.getProfileStatus(userID)
+            .then(status => {
+                dispatch(setProfileStatus(status))
+            })
+    }
+}
+
+export const updateStatus = (status) => {
+    return (dispatch) => {
+        profileAPI.updateProfileStatus(status)
+            .then(response => {
+                if(response.data.resultCode === 0) {
+                    dispatch(setProfileStatus(status))
+                }
             })
     }
 }

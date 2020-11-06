@@ -48,6 +48,10 @@ export const authAPI = {
     setAuth() {
         return axiosInstance.get('auth/me')
             .then(response => response.data)
+    },
+    login(values) {
+        return axiosInstance.post('auth/login', values)
+            .then(response => response.data)
     }
 
 }

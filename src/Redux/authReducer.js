@@ -10,7 +10,7 @@ export const setIsAuth = (isAuth) => ({type: SET_IS_AUTH, isAuth});
 //Initial State
 let initialState = {
     authData: {id: null, login: null, email: null},
-    resultCode: true,
+    resultCode: false,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -38,6 +38,20 @@ export const setAuth = () => {
             .then(data => {
                 dispatch(setAuthData(data.data))
                 if (data.resultCode === 0) {
+                    dispatch(setIsAuth(true))
+                }
+                else {
+                    dispatch(setIsAuth(false))
+                }
+            })
+    }
+}
+
+export const login = (values) => {
+    return (dispatch) => {
+        authAPI.login(values)
+            .then(data => {
+                if(data.resultCode === 0) {
                     dispatch(setIsAuth(true))
                 }
                 else {

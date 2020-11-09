@@ -45,6 +45,7 @@ function LoginForm(props) {
                                   </div>
                               )}
                               </Field>
+                              <span>{props.errorAuth}</span>
                           </div>
                           <div>
                               <Field name='rememberMe' type='checkbox' component='input'/> запомнить меня

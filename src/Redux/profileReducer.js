@@ -64,11 +64,8 @@ const profileReducer = (state = initialState, action) => {
 //Thunk
 export const getProfile = (userID) => {
     return (dispatch) => {
-        let withRouterUserID = userID
-        if (!withRouterUserID) {
-            withRouterUserID = 2
-        }
-        profileAPI.getProfile(withRouterUserID)
+
+        profileAPI.getProfile(userID)
             .then(data => {
                 dispatch(setUserProfile(data))
             })

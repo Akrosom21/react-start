@@ -47,18 +47,29 @@ export const setAuth = () => {
     }
 }
 
-export const login = (values) => {
+export const login = (email, password, rememberMe) => {
     return (dispatch) => {
-        authAPI.login(values)
+       authAPI.login(email, password, rememberMe)
             .then(data => {
                 if(data.resultCode === 0) {
-                    dispatch(setIsAuth(true))
+                    dispatch(setAuth())
                 }
-                else {
+            })
+    }
+}
+
+export const logout = () => {
+    return (dispatch) => {
+       authAPI.logout()
+            .then(data => {
+                if(data.resultCode === 0) {
+                    dispatch(setAuthData({}))
                     dispatch(setIsAuth(false))
                 }
             })
     }
 }
+
+
 
 export default authReducer;

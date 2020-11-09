@@ -3,10 +3,11 @@ import {Form, Field} from 'react-final-form'
 
 function LoginForm(props) {
     const onSubmit = (values) => {
-        console.log(values)
-        props.login(values)
+        props.login(values.email, values.password, values.rememberMe)
     }
+
     return (
+
 
         <>
             <Form onSubmit={onSubmit}
@@ -18,6 +19,9 @@ function LoginForm(props) {
                       if (!values.password) {
                           errors.password = 'Required'
                       }
+                      else if (values.password.length < 6) {
+                          errors.password = 'Password must be more than 5 symbols'
+                      }
                       return errors
                   }}
                   render={({handleSubmit, form, submitting, pristine, values}) => (
@@ -26,7 +30,7 @@ function LoginForm(props) {
                               <Field name='email'>
                               {({input, meta}) => (
                                   <div>
-                                      <input {...input} type="text" placeholder="Email"/>
+                                      <input className={meta.error && meta.touched && 'error'} {...input} type="email" placeholder="Email"/>
                                       {meta.error && meta.touched && <span>{meta.error}</span>}
                                   </div>
                               )}

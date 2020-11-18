@@ -1,55 +1,40 @@
-import React from "react";
+import React, {useState} from "react";
 
-class ProfileStatus extends React.Component {
-    state = {
-        editMode: false,
-        status: this.props.profileStatus
+function ProfileStatus(props) {
+    let [editMode, setEditMode] = useState(false)
+    let [status, setStatus] = useState(props.profileStatus)
+
+    let activateEditMode = () => {
+        setEditMode(true)
     }
 
-    activateEditMode = () => {
-        this.setState({
-            editMode: true
-        })
+    let deactivateEditMode = () => {
+        setEditMode(false)
+        props.updateStatus(status)
     }
 
-    deactivateEditMode = () => {
-        this.setState({
-            editMode: false
-        })
-        this.props.updateStatus(this.state.status)
+    let onStatusChange = (e) => {
+        setStatus(e.currentTarget.value)
     }
 
-    onStatusChange = (e) => {
-        this.setState({
-            status: e.currentTarget.value
-        })
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.profileStatus !== this.props.profileStatus) {
-            this.setState({
-                status: this.props.profileStatus
-            })
-        }
-    }
-
-    render() {
-        return (
-            <>
-                {this.state.editMode
-                    ?
-                    <div className="status__field">
-                        <input onChange={this.onStatusChange} onBlur={this.deactivateEditMode} value={this.state.status} autoFocus={true} type="text"
-                               className="status__input"/>
-                    </div>
-                    :
-                    <div className="status__text">
-                        <span onDoubleClick={this.activateEditMode} className="status__item">{this.props.profileStatus}</span>
-                    </div>
-                }
-            </>
-        )
-    }
+    return (
+        <>
+            {editMode
+                ?
+                <div className="status__field">
+                    <input onChange={onStatusChange} onBlur={deactivateEditMode} value={status}
+                           autoFocus={true} type="text"
+                           className="status__input"/>
+                </div>
+                :
+                <div className="status__text">
+                    <span onDoubleClick={activateEditMode}
+                          className="status__item">{props.profileStatus}</span>
+                </div>
+            }
+        </>
+    )
 }
+
 
 export default ProfileStatus

@@ -4,9 +4,8 @@ import classes from "./Posts.module.css";
 import "../../App.css";
 
 function Posts(props) {
-
     let postElements = props.postDataArray.map((el) => (
-        <Post message={el.message} avatar={el.avatar}/>
+        <Post key={el.id} message={el.message} avatar={el.avatar}/>
     ));
 
     let getPostText = React.createRef();
@@ -19,7 +18,6 @@ function Posts(props) {
         let postText = getPostText.current.value;
         props.changeSymbol(postText);
     }
-
     return (
         <div className={classes.posts}>
             <div className={classes.posts__title}>My posts</div>

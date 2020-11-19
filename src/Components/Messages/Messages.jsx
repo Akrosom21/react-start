@@ -5,11 +5,11 @@ import classes from "./Messages.module.css";
 
 function Messages(props) {
     let userElements = props.userDataArray.map((el) => (
-        <User name={el.name} id={el.id}/>
+        <User name={el.name} key={el.id}/>
     ));
 
     let dialogElements = props.dialogDataArray.map((el) => (
-        <Dialog message={el.message}/>
+        <Dialog message={el.message} key={el.id}/>
     ));
 
     let changeMessageText = (e) => {

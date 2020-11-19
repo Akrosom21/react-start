@@ -16,10 +16,10 @@ export const setProfileStatus = (status) => ({type: SET_PROFILE_STATUS, status})
 //Initial State
 let initialState = {
     postData: [
-        {message: "Hello", avatar: avatar001},
-        {message: "It's my first post", avatar: avatar002},
-        {message: "How's it going?", avatar: avatar001},
-        {message: "Cool site!", avatar: avatar002},
+        {id: 1, message: "Hello", avatar: avatar001},
+        {id: 2, message: "It's my first post", avatar: avatar002},
+        {id: 3, message: "How's it going?", avatar: avatar001},
+        {id: 4, message: "Cool site!", avatar: avatar002},
     ],
     postSymbol: '',
     profile: null,

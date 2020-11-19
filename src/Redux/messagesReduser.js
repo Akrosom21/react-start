@@ -5,9 +5,9 @@ export const addDialogSymbolActionCreator = (messageText) => ({type: addDialogSy
 
 let initialState = {
     dialogData: [
-        {message: 'Hello'},
-        {message: 'How are you?'},
-        {message: 'Where are you from?'}
+        {id: 1, message: 'Hello'},
+        {id: 2, message: 'How are you?'},
+        {id: 3, message: 'Where are you from?'}
     ],
     dialogSymbol: '',
     userData: [

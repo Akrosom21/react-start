@@ -17,6 +17,10 @@ function Main(props) {
                     render={() => <ProfileContainer/>}
                 />
                 <Route
+                    exact path="/"
+                    render={() => <ProfileContainer/>}
+                />
+                <Route
                     path="/messages"
                     render={() => (
                         <MessagesContainer/>

@@ -1,5 +1,5 @@
-const addDialogSymbol = 'ADD-DIALOG-SYMBOL';
-const addDialogMessage = 'ADD-DIALOG-MESSAGE';
+const addDialogSymbol = 'messagesPage/ADD-DIALOG-SYMBOL';
+const addDialogMessage = 'messagesPage/ADD-DIALOG-MESSAGE';
 export const addDialogMessageActionCreator = () => ({type: addDialogMessage});
 export const addDialogSymbolActionCreator = (messageText) => ({type: addDialogSymbol, inputDialogSymbol: messageText});
 

@@ -2,10 +2,10 @@ import avatar001 from "../img/ava.jfif";
 import avatar002 from "../img/ava002.jfif";
 import {profileAPI} from "../API/api";
 
-const addPost = 'ADD-POST';
-const addSymbol = 'ADD-SYMBOL';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS';
+const addPost = 'profilePage/ADD-POST';
+const addSymbol = 'profilePage/ADD-SYMBOL';
+const SET_USER_PROFILE = 'profilePage/SET_USER_PROFILE';
+const SET_PROFILE_STATUS = 'profilePage/SET_PROFILE_STATUS';
 
 //Action Creators
 export const addPostActionCreator = () => ({type: addPost});
@@ -28,7 +28,6 @@ let initialState = {
 
 const profileReducer = (state = initialState, action) => {
     let stateCopy = {...state};
-
     if (action.type === addPost) {
         let newMessage = {
             message: state.postSymbol,
@@ -44,51 +43,42 @@ const profileReducer = (state = initialState, action) => {
             ...state,
             postSymbol: action.inputSymbol,
         }
-    }
-    else if (action.type === SET_USER_PROFILE) {
+    } else if (action.type === SET_USER_PROFILE) {
         return {
             ...state,
             profile: action.profile
         }
-    }
-    else if (action.type === SET_PROFILE_STATUS) {
+    } else if (action.type === SET_PROFILE_STATUS) {
         return {
             ...state,
             profileStatus: action.status
         }
     }
-
     return stateCopy;
 }
 
 //Thunk
 export const getProfile = (userID) => {
-    return (dispatch) => {
+    return async (dispatch) => {
 
-        profileAPI.getProfile(userID)
-            .then(data => {
-                dispatch(setUserProfile(data))
-            })
+        const data = await profileAPI.getProfile(userID)
+        dispatch(setUserProfile(data))
     }
 }
 
 export const setStatus = (userID) => {
-    return (dispatch) => {
-        profileAPI.getProfileStatus(userID)
-            .then(status => {
-                dispatch(setProfileStatus(status))
-            })
+    return async (dispatch) => {
+        const status = await profileAPI.getProfileStatus(userID)
+        dispatch(setProfileStatus(status))
     }
 }
 
 export const updateStatus = (status) => {
-    return (dispatch) => {
-        profileAPI.updateProfileStatus(status)
-            .then(response => {
-                if(response.data.resultCode === 0) {
-                    dispatch(setProfileStatus(status))
-                }
-            })
+    return async (dispatch) => {
+        const response = await profileAPI.updateProfileStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setProfileStatus(status))
+        }
     }
 }
 

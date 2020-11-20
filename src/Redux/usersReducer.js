@@ -1,12 +1,12 @@
 import {userAPI} from "../API/api";
 
-const FOLLOW = 'FOLLOW';
-const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET-USERS';
-const CHANGE_PAGE = 'CHANGE-PAGE';
-const SET_USERS_NUMBER = 'SET-USERS-NUMBER';
-const FETCHING_SHOW_PRELOADER = 'FETCHING-SHOW-PRELOADER';
-const DISABLE_BTN = 'DISABLE_BTN-SHOW-PRELOADER';
+const FOLLOW = 'usersPage/FOLLOW';
+const UNFOLLOW = 'usersPage/UNFOLLOW';
+const SET_USERS = 'usersPage/SET-USERS';
+const CHANGE_PAGE = 'usersPage/CHANGE-PAGE';
+const SET_USERS_NUMBER = 'usersPage/SET-USERS-NUMBER';
+const FETCHING_SHOW_PRELOADER = 'usersPage/FETCHING-SHOW-PRELOADER';
+const DISABLE_BTN = 'usersPage/DISABLE_BTN-SHOW-PRELOADER';
 
 //Action Creators
 export const follow = (userID) => ({type: FOLLOW, userID});
@@ -16,7 +16,6 @@ export const changePage = (page) => ({type: CHANGE_PAGE, page});
 export const setUsersNumber = (usersNumber) => ({type: SET_USERS_NUMBER, usersNumber});
 export const fetchingShowPreloader = (preloader) => ({type: FETCHING_SHOW_PRELOADER, preloader});
 export const disableBtn = (disable, userID) => ({type: DISABLE_BTN, disable, userID});
-
 
 //Initial State
 let initialState = {
@@ -30,7 +29,6 @@ let initialState = {
 
 const usersReducer = (state = initialState, action) => {
     let stateCopy = {...state};
-
     if (action.type === FOLLOW) {
 
         return {
@@ -81,59 +79,50 @@ const usersReducer = (state = initialState, action) => {
         }
 
     }
-
     return stateCopy;
 }
 
 //Thunk
 export const getUsers = (currentPage, usersInPage) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(fetchingShowPreloader(true))
-        userAPI.getUsers(currentPage, usersInPage)
-            .then(data => {
-                dispatch(fetchingShowPreloader(false))
-                dispatch(setUsers(data.items))
-                let reduceCount = data.totalCount - (data.totalCount - 50)
-                dispatch(setUsersNumber(reduceCount))
-            });
+        const data = await userAPI.getUsers(currentPage, usersInPage)
+        dispatch(fetchingShowPreloader(false))
+        dispatch(setUsers(data.items))
+        let reduceCount = data.totalCount - (data.totalCount - 50)
+        dispatch(setUsersNumber(reduceCount))
     }
 }
 
 export const getUsersPage = (page, usersInPage) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(changePage(page))
         dispatch(fetchingShowPreloader(true))
-        userAPI.getUsersPage(page, usersInPage)
-            .then(data => {
-                dispatch(fetchingShowPreloader(false))
-                dispatch(setUsers(data.items))
-            });
+        const data = await userAPI.getUsersPage(page, usersInPage)
+        dispatch(fetchingShowPreloader(false))
+        dispatch(setUsers(data.items))
     }
 }
 
 export const setFollow = (userID) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(disableBtn(true, userID))
-        userAPI.follow(userID)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(follow(userID))
-                }
-                dispatch(disableBtn(false, userID))
-            })
+        const data = await userAPI.follow(userID)
+        if (data.resultCode === 0) {
+            dispatch(follow(userID))
+        }
+        dispatch(disableBtn(false, userID))
     }
 }
 
 export const setUnfollow = (userID) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(disableBtn(true, userID))
-        userAPI.unfollow(userID)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(unfollow(userID))
-                }
-                dispatch(disableBtn(false, userID))
-            })
+        const data = await userAPI.unfollow(userID)
+        if (data.resultCode === 0) {
+            dispatch(unfollow(userID))
+        }
+        dispatch(disableBtn(false, userID))
     }
 }
 

@@ -1,3 +1,24 @@
 .pagination__current {
     font-weight: bold;
 }
+
+.pagination__list {
+    display: flex;
+    list-style-type: none;
+}
+
+.pagination__list li {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.pagination__list a {
+    text-decoration: none;
+    color: #333333;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.active a {
+    color: #7E55F3;
+}

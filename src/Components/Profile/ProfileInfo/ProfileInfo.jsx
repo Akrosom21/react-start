@@ -8,6 +8,12 @@ import ProfileStatus from "../ProfileStatus/ProfileStatus";
 
 function ProfileInfo(props) {
 
+    const onPhotoUpdate = (e) => {
+        if (e.target.files.length) {
+            props.updatePhoto(e.target.files[0])
+        }
+    }
+
     if (!props.profile) {
         return <Preloader/>
     }
@@ -21,11 +27,14 @@ function ProfileInfo(props) {
                 className={classes.profile__bg_img}
             />
             <div className={classes.profile__info}>
-                <img
-                    src={props.profile.photos.small != null ? props.profile.photos.small : profileImg}
-                    alt="profile"
-                    className={classes.profile__photo}
-                />
+                <div className={classes.profile__avatar}>
+                    <img
+                        src={props.profile.photos.small != null ? props.profile.photos.small : profileImg}
+                        alt="profile"
+                        className={classes.profile__photo}
+                    />
+                    {props.isOwner && <input onChange={onPhotoUpdate} type="file"/>}
+                </div>
                 <div className={classes.profile__desc}>
                     <div className={classes.profile__name}>{props.profile.fullName}</div>
                     <ProfileStatus profileStatus={props.profileStatus} updateStatus={props.updateStatus}/>

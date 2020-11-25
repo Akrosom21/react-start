@@ -6,12 +6,14 @@ const addPost = 'profilePage/ADD-POST';
 const addSymbol = 'profilePage/ADD-SYMBOL';
 const SET_USER_PROFILE = 'profilePage/SET_USER_PROFILE';
 const SET_PROFILE_STATUS = 'profilePage/SET_PROFILE_STATUS';
+const SET_PROFILE_PHOTO = 'profilePage/SET_PROFILE_PHOTO';
 
 //Action Creators
 export const addPostActionCreator = () => ({type: addPost});
 export const addSymbolActionCreator = (postText) => ({type: addSymbol, inputSymbol: postText});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setProfileStatus = (status) => ({type: SET_PROFILE_STATUS, status});
+export const setProfilePhoto = (photo) => ({type: SET_PROFILE_PHOTO, photo});
 
 //Initial State
 let initialState = {
@@ -54,6 +56,12 @@ const profileReducer = (state = initialState, action) => {
             profileStatus: action.status
         }
     }
+    else if (action.type === SET_PROFILE_PHOTO) {
+        return {
+            ...state,
+            profile: {...state.profile, photos: action.photo}
+        }
+    }
     return stateCopy;
 }
 
@@ -78,6 +86,15 @@ export const updateStatus = (status) => {
         const response = await profileAPI.updateProfileStatus(status)
         if (response.data.resultCode === 0) {
             dispatch(setProfileStatus(status))
+        }
+    }
+}
+
+export const updatePhoto = (file) => {
+    return async (dispatch) => {
+        const response = await profileAPI.updateProfilePhoto(file)
+        if (response.resultCode === 0) {
+            dispatch(setProfilePhoto(response.data.photos))
         }
     }
 }

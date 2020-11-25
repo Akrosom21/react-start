@@ -1,27 +1,27 @@
 import React from "react";
 import classes from './Users.module.css'
 import Person from "./Person/Person";
+import Pagination from "react-js-pagination";
 
 function Users(props) {
-    let pages = Math.ceil(props.usersNumber / props.usersInPage)
-    let pagesArr = []
-    for (let i = 1; i <= pages; i++) {
-        pagesArr.push(i)
-    }
-
-    let paginationItems = pagesArr.map(p => (
-         <span key={p} onClick={() => props.onChangePage(p)} className={props.currentPage === p ? classes.pagination__current : null}>{p}</span>
-    ))
 
     let personal = props.usersArr.map((p) => (
         <Person key={p.id} userID={p.id} photo={p.photos.small} fullName={p.name} status={p.status}
                 country={'p.location.country'} city={'p.location.city'} followed={p.followed}
                 isDisableBtn={props.isDisableBtn} setFollow={props.setFollow} setUnfollow={props.setUnfollow}/>))
-
     return (
         <div className={classes.users}>
             <div className={classes.pagination}>
-                {paginationItems}
+                <Pagination
+                    activePage={props.currentPage}
+                    itemsCountPerPage={props.usersInPage}
+                    totalItemsCount={props.usersNumber}
+                    pageRangeDisplayed={10}
+                    onChange={props.onChangePage}
+                    hideDisabled={true}
+                    innerClass={classes.pagination__list}
+                    activeClass={classes.active}
+                />
             </div>
             <div className={classes.users__inner}>
                 {personal}

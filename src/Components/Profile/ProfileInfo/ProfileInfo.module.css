@@ -8,6 +8,11 @@
   margin-top: 50px;
 }
 
+.profile__avatar {
+  display: flex;
+  flex-direction: column;
+}
+
 .profile__photo {
   width: 150px;
   height: 150px;

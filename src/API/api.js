@@ -41,6 +41,12 @@ export const profileAPI = {
     },
     updateProfileStatus(status) {
         return axiosInstance.put('/profile/status/', {status: status})
+    },
+    updateProfilePhoto(file) {
+        const formData = new FormData()
+        formData.append('image', file)
+        return axiosInstance.put('/profile/photo', formData)
+            .then(response => response.data)
     }
 }
 

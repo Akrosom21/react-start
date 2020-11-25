@@ -89,8 +89,7 @@ export const getUsers = (currentPage, usersInPage) => {
         const data = await userAPI.getUsers(currentPage, usersInPage)
         dispatch(fetchingShowPreloader(false))
         dispatch(setUsers(data.items))
-        let reduceCount = data.totalCount - (data.totalCount - 50)
-        dispatch(setUsersNumber(reduceCount))
+        dispatch(setUsersNumber(data.totalCount))
     }
 }
 

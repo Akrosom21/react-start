@@ -1,7 +1,7 @@
 import React from 'react';
 import Main from './Components/Main/Main.jsx';
 import './App.css';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import {connect} from "react-redux";
 import {initialize} from './Redux/appReducer'
@@ -18,12 +18,12 @@ class App extends React.Component {
            return <Preloader/>
         }
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <div className="wrapper">
                     <HeaderContainer/>
                     <Main/>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }

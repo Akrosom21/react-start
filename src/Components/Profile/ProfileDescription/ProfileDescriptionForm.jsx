@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import classes from "../ProfileInfo/ProfileInfo.module.css";
 import {Field, Form} from "react-final-form";
 
@@ -16,7 +16,6 @@ function ProfileDescriptionForm(props) {
         </div>)
     const onSubmit = (values) => {
         props.changeProfile(values)
-            props.editProfile(false)
     }
     return (
 
@@ -72,6 +71,7 @@ function ProfileDescriptionForm(props) {
                           </div>
                           {contact}
                           <button type='submit'>SAVE</button>
+                          <div>{props.changeProfileError}</div>
                       </form>
                   )
 

@@ -120,6 +120,7 @@ export const changeProfile = (profile) => {
         if (response.resultCode === 0) {
             dispatch(getProfile(userID))
             dispatch(changeProfileError(response.messages))
+            dispatch(editProfile(false))
         } else {
             dispatch(changeProfileError(response.messages))
         }

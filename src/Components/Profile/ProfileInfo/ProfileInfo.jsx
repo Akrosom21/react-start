@@ -53,7 +53,6 @@ function ProfileInfo(props) {
                                         editProfile={props.editProfile}
                     />}
             </div>
-            <div>{props.changeProfileError}</div>
         </div>
     );
 }

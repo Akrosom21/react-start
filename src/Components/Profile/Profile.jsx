@@ -13,6 +13,10 @@ function Profile(props) {
                          profileStatus={props.profileStatus}
                          updateStatus={props.updateStatus}
                          isOwner={props.isOwner}
+                         isEdit={props.isEdit}
+                         editProfile={props.editProfile}
+                         changeProfile={props.changeProfile}
+                         changeProfileError={props.changeProfileError}
             />
             <PostsContainer/>
         </div>

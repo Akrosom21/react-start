@@ -7,6 +7,8 @@ const addSymbol = 'profilePage/ADD-SYMBOL';
 const SET_USER_PROFILE = 'profilePage/SET_USER_PROFILE';
 const SET_PROFILE_STATUS = 'profilePage/SET_PROFILE_STATUS';
 const SET_PROFILE_PHOTO = 'profilePage/SET_PROFILE_PHOTO';
+const EDIT_PROFILE = 'profilePage/EDIT_PROFILE';
+const CHANGE_PROFILE_ERROR = 'profilePage/CHANGE_PROFILE_ERROR';
 
 //Action Creators
 export const addPostActionCreator = () => ({type: addPost});
@@ -14,6 +16,8 @@ export const addSymbolActionCreator = (postText) => ({type: addSymbol, inputSymb
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setProfileStatus = (status) => ({type: SET_PROFILE_STATUS, status});
 export const setProfilePhoto = (photo) => ({type: SET_PROFILE_PHOTO, photo});
+export const editProfile = (edit) => ({type: EDIT_PROFILE, edit});
+export const changeProfileError = (messages) => ({type: CHANGE_PROFILE_ERROR, messages});
 
 //Initial State
 let initialState = {
@@ -26,6 +30,8 @@ let initialState = {
     postSymbol: '',
     profile: null,
     profileStatus: 'initial status',
+    isEdit: false,
+    changeProfileError: []
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -55,11 +61,20 @@ const profileReducer = (state = initialState, action) => {
             ...state,
             profileStatus: action.status
         }
-    }
-    else if (action.type === SET_PROFILE_PHOTO) {
+    } else if (action.type === SET_PROFILE_PHOTO) {
         return {
             ...state,
             profile: {...state.profile, photos: action.photo}
+        }
+    } else if (action.type === EDIT_PROFILE) {
+        return {
+            ...state,
+            isEdit: action.edit
+        }
+    } else if (action.type === CHANGE_PROFILE_ERROR) {
+        return {
+            ...state,
+            changeProfileError: action.messages
         }
     }
     return stateCopy;
@@ -68,7 +83,6 @@ const profileReducer = (state = initialState, action) => {
 //Thunk
 export const getProfile = (userID) => {
     return async (dispatch) => {
-
         const data = await profileAPI.getProfile(userID)
         dispatch(setUserProfile(data))
     }
@@ -95,6 +109,19 @@ export const updatePhoto = (file) => {
         const response = await profileAPI.updateProfilePhoto(file)
         if (response.resultCode === 0) {
             dispatch(setProfilePhoto(response.data.photos))
+        }
+    }
+}
+
+export const changeProfile = (profile) => {
+    return async (dispatch, getState) => {
+        const response = await profileAPI.updateProfile(profile)
+        const userID = getState().auth.authData.id
+        if (response.resultCode === 0) {
+            dispatch(getProfile(userID))
+            dispatch(changeProfileError(response.messages))
+        } else {
+            dispatch(changeProfileError(response.messages))
         }
     }
 }

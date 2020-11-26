@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import profileBg from "../../../img/profile_bg.webp";
 import classes from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import profileImg from "../../../img/profile.png";
-import ProfileStatus from "../ProfileStatus/ProfileStatus";
+import ProfileDescription from "../ProfileDescription/ProfileDescription";
+import ProfileDescriptionForm from "../ProfileDescription/ProfileDescriptionForm";
 
 
 function ProfileInfo(props) {
@@ -35,26 +36,24 @@ function ProfileInfo(props) {
                     />
                     {props.isOwner && <input onChange={onPhotoUpdate} type="file"/>}
                 </div>
-                <div className={classes.profile__desc}>
-                    <div className={classes.profile__name}>{props.profile.fullName}</div>
-                    <ProfileStatus profileStatus={props.profileStatus} updateStatus={props.updateStatus}/>
-                    <div className={classes.profile__desc_text}>
-                        About Me: <span>{props.profile.aboutMe}</span>
-                    </div>
-                    <div className={classes.profile__desc_text}>
-                        City: <span>New York</span>
-                    </div>
-                    <div className={classes.profile__desc_text}>
-                        Education: <span>NYC</span>
-                    </div>
-                    <div className={classes.profile__desc_text}>
-                        Web Site:{" "}
-                        <span>
-                <a href={props.profile.website}>{props.profile.website}</a>
-              </span>
-                    </div>
-                </div>
+                {props.isEdit
+                    ?
+                    <ProfileDescriptionForm profile={props.profile}
+                                            profileStatus={props.profileStatus}
+                                            updateStatus={props.updateStatus}
+                                            changeProfile={props.changeProfile}
+                                            editProfile={props.editProfile}
+                                            changeProfileError={props.changeProfileError}
+                    />
+                    :
+                    <ProfileDescription profile={props.profile}
+                                        isOwner={props.isOwner}
+                                        profileStatus={props.profileStatus}
+                                        updateStatus={props.updateStatus}
+                                        editProfile={props.editProfile}
+                    />}
             </div>
+            <div>{props.changeProfileError}</div>
         </div>
     );
 }

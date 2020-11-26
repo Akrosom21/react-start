@@ -36,16 +36,20 @@ export const profileAPI = {
             .then(response => response.data)
     },
     getProfileStatus(userID) {
-        return axiosInstance.get('/profile/status/' + userID)
+        return axiosInstance.get('profile/status/' + userID)
             .then(response => response.data)
     },
     updateProfileStatus(status) {
-        return axiosInstance.put('/profile/status/', {status: status})
+        return axiosInstance.put('profile/status/', {status: status})
     },
     updateProfilePhoto(file) {
         const formData = new FormData()
         formData.append('image', file)
-        return axiosInstance.put('/profile/photo', formData)
+        return axiosInstance.put('profile/photo', formData)
+            .then(response => response.data)
+    },
+    updateProfile(profile) {
+        return axiosInstance.put('profile', profile)
             .then(response => response.data)
     }
 }

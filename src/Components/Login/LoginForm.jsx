@@ -7,8 +7,6 @@ function LoginForm(props) {
     }
 
     return (
-
-
         <>
             <Form onSubmit={onSubmit}
                   validate={values => {

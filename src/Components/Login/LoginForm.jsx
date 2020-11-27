@@ -14,11 +14,11 @@ function LoginForm(props) {
                       const errors = {}
                       if (!values.email) {
                           errors.email = 'Required'
-                      } else if (!values.password) {
+                      }
+                      if (!values.password) {
                           errors.password = 'Required'
-                      } else if (!values.captcha) {
-                          errors.captcha = 'Required'
-                      } else if (values.password.length < 6) {
+                      }
+                      else if (values.password.length < 6) {
                           errors.password = 'Password must be more than 5 symbols'
                       }
                       return errors

@@ -12,14 +12,18 @@ function Login(props) {
     return (
         <>
             <div>Login</div>
-            <LoginForm login={props.login} logout={props.logout} errorAuth={props.errorAuth}/>
+            <LoginForm login={props.login}
+                       logout={props.logout}
+                       errorAuth={props.errorAuth}
+                       captchaUrl={props.captchaUrl}/>
         </>
     )
 }
 
 const mapStateToProps = (state) => ({
     resultCode: state.auth.resultCode,
-    errorAuth: state.auth.errorAuth
+    errorAuth: state.auth.errorAuth,
+    captchaUrl: state.auth.captchaUrl
 })
 
 export default connect(mapStateToProps, {login, logout})(Login)

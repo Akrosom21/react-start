@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import profileBg from "../../../img/profile_bg.webp";
 import classes from './ProfileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";

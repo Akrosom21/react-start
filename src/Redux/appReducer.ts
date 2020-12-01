@@ -3,14 +3,19 @@ import {setAuth} from "./authReducer";
 const SET_INITIALIZED = 'appData/SET_INITIALIZED';
 
 //Action Creators
-export const setInitialized = () => ({type: SET_INITIALIZED});
+type setInitializedType = {
+    type: typeof SET_INITIALIZED
+}
+export const setInitialized = (): setInitializedType => ({type: SET_INITIALIZED});
 
 //Initial State
 let initialState = {
     initialized: false,
 }
 
-const appReducer = (state = initialState, action) => {
+type InitialState =  typeof initialState
+
+const appReducer = (state = initialState, action): InitialState => {
     let stateCopy = {...state};
     if (action.type === SET_INITIALIZED) {
 

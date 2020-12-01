@@ -1,6 +1,7 @@
-import avatar001 from "../img/ava.jfif";
-import avatar002 from "../img/ava002.jfif";
 import {profileAPI} from "../API/api";
+import { profile, photos } from "../types/types";
+const avatar001 = require("../img/ava.jfif");
+const avatar002 = require("../img/ava002.jfif");
 
 const addPost = 'profilePage/ADD-POST';
 const addSymbol = 'profilePage/ADD-SYMBOL';
@@ -11,35 +12,70 @@ const EDIT_PROFILE = 'profilePage/EDIT_PROFILE';
 const CHANGE_PROFILE_ERROR = 'profilePage/CHANGE_PROFILE_ERROR';
 
 //Action Creators
-export const addPostActionCreator = () => ({type: addPost});
-export const addSymbolActionCreator = (postText) => ({type: addSymbol, inputSymbol: postText});
-export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
-export const setProfileStatus = (status) => ({type: SET_PROFILE_STATUS, status});
-export const setProfilePhoto = (photo) => ({type: SET_PROFILE_PHOTO, photo});
-export const editProfile = (edit) => ({type: EDIT_PROFILE, edit});
-export const changeProfileError = (messages) => ({type: CHANGE_PROFILE_ERROR, messages});
+type addPostActionCreatorType = {
+    type: typeof addPost
+}
+export const addPostActionCreator = (): addPostActionCreatorType => ({type: addPost});
+type addSymbolActionCreatorType = {
+    type: typeof addSymbol
+    inputSymbol: string
+}
+export const addSymbolActionCreator = (postText: string): addSymbolActionCreatorType => ({type: addSymbol, inputSymbol: postText});
+type setUserProfileType = {
+    type: typeof SET_USER_PROFILE
+    profile: profile
+}
+export const setUserProfile = (profile: profile): setUserProfileType => ({type: SET_USER_PROFILE, profile});
+type setProfileStatusType = {
+    type: typeof SET_PROFILE_STATUS
+    status: string
+}
+export const setProfileStatus = (status: string): setProfileStatusType => ({type: SET_PROFILE_STATUS, status});
+type setProfilePhotoType = {
+    type: typeof SET_PROFILE_PHOTO
+    photos: photos
+}
+export const setProfilePhoto = (photos: photos): setProfilePhotoType => ({type: SET_PROFILE_PHOTO, photos});
+type editProfileType = {
+    type: typeof EDIT_PROFILE
+    edit: boolean
+}
+export const editProfile = (edit: boolean): editProfileType => ({type: EDIT_PROFILE, edit});
+type changeProfileErrorType = {
+    type: typeof CHANGE_PROFILE_ERROR
+    messages: Array<string>
+}
+export const changeProfileError = (messages: Array<string>): changeProfileErrorType => ({type: CHANGE_PROFILE_ERROR, messages});
 
 //Initial State
+type postDataType = {
+    id: number
+    message: string
+    avatar: any
+}
 let initialState = {
     postData: [
         {id: 1, message: "Hello", avatar: avatar001},
         {id: 2, message: "It's my first post", avatar: avatar002},
         {id: 3, message: "How's it going?", avatar: avatar001},
         {id: 4, message: "Cool site!", avatar: avatar002},
-    ],
+    ] as Array<postDataType>,
     postSymbol: '',
-    profile: null,
+    profile: null as profile | null,
     profileStatus: 'initial status',
     isEdit: false,
-    changeProfileError: []
+    changeProfileError: [] as Array<string>
 }
 
-const profileReducer = (state = initialState, action) => {
+type InitialState = typeof initialState
+
+const profileReducer = (state = initialState, action): InitialState => {
     let stateCopy = {...state};
     if (action.type === addPost) {
         let newMessage = {
             message: state.postSymbol,
-            avatar: avatar002
+            avatar: avatar002,
+            id: 5
         }
         return {
             ...state,
@@ -64,7 +100,7 @@ const profileReducer = (state = initialState, action) => {
     } else if (action.type === SET_PROFILE_PHOTO) {
         return {
             ...state,
-            profile: {...state.profile, photos: action.photo}
+            profile: {...state.profile, photos: action.photos} as profile
         }
     } else if (action.type === EDIT_PROFILE) {
         return {

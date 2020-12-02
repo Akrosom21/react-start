@@ -1,8 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 
-function ProfileStatus(props) {
-    let [editMode, setEditMode] = useState(false)
-    let [status, setStatus] = useState(props.profileStatus)
+type propsType = {
+    profileStatus: string
+    updateStatus: (status: string) => void
+}
+
+const ProfileStatus: FC<propsType> = (props) => {
+    let [editMode, setEditMode] = useState<boolean>(false)
+    let [status, setStatus] = useState<string>(props.profileStatus)
 
     let activateEditMode = () => {
         setEditMode(true)

@@ -13,7 +13,7 @@ type addDialogSymbolType = {
     inputDialogSymbol: string
 }
 export const addDialogSymbol = (messageText: string): addDialogSymbolType => ({type: dialogSymbol, inputDialogSymbol: messageText});
-
+type actionType = addDialogMessageType | addDialogSymbolType
 let initialState = {
     dialogData: [
         {id: 1, message: 'Hello'},
@@ -31,7 +31,7 @@ let initialState = {
 
 type InitialState = typeof initialState
 
-const messagesReducer = (state = initialState, action): InitialState => {
+const messagesReducer = (state = initialState, action: actionType): InitialState => {
     let stateCopy = {...state};
     if (action.type === dialogSymbol) {
         return {

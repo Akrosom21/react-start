@@ -1,5 +1,7 @@
 import {userAPI} from "../API/api";
 import {user} from "../types/types";
+import {ThunkAction} from "redux-thunk";
+import { AppRootReducer } from "./reduxStore";
 
 const FOLLOW = 'usersPage/FOLLOW';
 const UNFOLLOW = 'usersPage/UNFOLLOW';
@@ -47,6 +49,8 @@ type disableBtnType = {
 }
 export const disableBtn = (disable: boolean, userID: number): disableBtnType => ({type: DISABLE_BTN, disable, userID});
 
+type actionsType = followType | unfollowType | setUsersType | changePageType |
+    setUsersNumberType | fetchingShowPreloaderType | disableBtnType
 //Initial State
 let initialState = {
     users: [] as Array<user>,
@@ -59,7 +63,7 @@ let initialState = {
 
 type InitialState = typeof initialState
 
-const usersReducer = (state = initialState, action): InitialState => {
+const usersReducer = (state = initialState, action: actionsType): InitialState => {
     let stateCopy = {...state};
     if (action.type === FOLLOW) {
 
@@ -115,7 +119,9 @@ const usersReducer = (state = initialState, action): InitialState => {
 }
 
 //Thunk
-export const getUsers = (currentPage, usersInPage) => {
+type thunkType =  ThunkAction<Promise<void>, AppRootReducer, any, actionsType>
+
+export const getUsers = (currentPage: number, usersInPage: number): thunkType => {
     return async (dispatch) => {
         dispatch(fetchingShowPreloader(true))
         const data = await userAPI.getUsers(currentPage, usersInPage)
@@ -125,7 +131,7 @@ export const getUsers = (currentPage, usersInPage) => {
     }
 }
 
-export const getUsersPage = (page, usersInPage) => {
+export const getUsersPage = (page: number, usersInPage: number): thunkType => {
     return async (dispatch) => {
         dispatch(changePage(page))
         dispatch(fetchingShowPreloader(true))
@@ -135,7 +141,7 @@ export const getUsersPage = (page, usersInPage) => {
     }
 }
 
-export const setFollow = (userID) => {
+export const setFollow = (userID: number): thunkType => {
     return async (dispatch) => {
         dispatch(disableBtn(true, userID))
         const data = await userAPI.follow(userID)
@@ -146,7 +152,7 @@ export const setFollow = (userID) => {
     }
 }
 
-export const setUnfollow = (userID) => {
+export const setUnfollow = (userID: number): thunkType => {
     return async (dispatch) => {
         dispatch(disableBtn(true, userID))
         const data = await userAPI.unfollow(userID)

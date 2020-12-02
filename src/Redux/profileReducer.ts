@@ -1,5 +1,7 @@
 import {profileAPI} from "../API/api";
 import { profile, photos } from "../types/types";
+import {ThunkAction} from "redux-thunk";
+import { AppRootReducer } from "./reduxStore";
 const avatar001 = require("../img/ava.jfif");
 const avatar002 = require("../img/ava002.jfif");
 
@@ -47,6 +49,8 @@ type changeProfileErrorType = {
 }
 export const changeProfileError = (messages: Array<string>): changeProfileErrorType => ({type: CHANGE_PROFILE_ERROR, messages});
 
+type actionType = addPostActionCreatorType | addSymbolActionCreatorType |
+    setUserProfileType | setProfileStatusType | setProfilePhotoType | editProfileType |changeProfileErrorType
 //Initial State
 type postDataType = {
     id: number
@@ -69,7 +73,7 @@ let initialState = {
 
 type InitialState = typeof initialState
 
-const profileReducer = (state = initialState, action): InitialState => {
+const profileReducer = (state = initialState, action: actionType): InitialState => {
     let stateCopy = {...state};
     if (action.type === addPost) {
         let newMessage = {
@@ -117,21 +121,22 @@ const profileReducer = (state = initialState, action): InitialState => {
 }
 
 //Thunk
-export const getProfile = (userID) => {
+type thunkType = ThunkAction<Promise<void>, AppRootReducer, any, actionType>
+export const getProfile = (userID: number): thunkType => {
     return async (dispatch) => {
         const data = await profileAPI.getProfile(userID)
         dispatch(setUserProfile(data))
     }
 }
 
-export const setStatus = (userID) => {
+export const setStatus = (userID: number): thunkType => {
     return async (dispatch) => {
         const status = await profileAPI.getProfileStatus(userID)
         dispatch(setProfileStatus(status))
     }
 }
 
-export const updateStatus = (status) => {
+export const updateStatus = (status: string): thunkType => {
     return async (dispatch) => {
         const response = await profileAPI.updateProfileStatus(status)
         if (response.data.resultCode === 0) {
@@ -140,7 +145,7 @@ export const updateStatus = (status) => {
     }
 }
 
-export const updatePhoto = (file) => {
+export const updatePhoto = (file: any): thunkType => {
     return async (dispatch) => {
         const response = await profileAPI.updateProfilePhoto(file)
         if (response.resultCode === 0) {
@@ -149,7 +154,7 @@ export const updatePhoto = (file) => {
     }
 }
 
-export const changeProfile = (profile) => {
+export const changeProfile = (profile: profile): thunkType => {
     return async (dispatch, getState) => {
         const response = await profileAPI.updateProfile(profile)
         const userID = getState().auth.authData.id

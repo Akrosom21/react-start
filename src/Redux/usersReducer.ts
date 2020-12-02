@@ -1,4 +1,5 @@
 import {userAPI} from "../API/api";
+import {user} from "../types/types";
 
 const FOLLOW = 'usersPage/FOLLOW';
 const UNFOLLOW = 'usersPage/UNFOLLOW';
@@ -9,25 +10,56 @@ const FETCHING_SHOW_PRELOADER = 'usersPage/FETCHING-SHOW-PRELOADER';
 const DISABLE_BTN = 'usersPage/DISABLE_BTN-SHOW-PRELOADER';
 
 //Action Creators
-export const follow = (userID) => ({type: FOLLOW, userID});
-export const unfollow = (userID) => ({type: UNFOLLOW, userID});
-export const setUsers = (users) => ({type: SET_USERS, users});
-export const changePage = (page) => ({type: CHANGE_PAGE, page});
-export const setUsersNumber = (usersNumber) => ({type: SET_USERS_NUMBER, usersNumber});
-export const fetchingShowPreloader = (preloader) => ({type: FETCHING_SHOW_PRELOADER, preloader});
-export const disableBtn = (disable, userID) => ({type: DISABLE_BTN, disable, userID});
+type followType = {
+    type: typeof FOLLOW
+    userID: number
+}
+export const follow = (userID: number): followType => ({type: FOLLOW, userID});
+type unfollowType = {
+    type: typeof UNFOLLOW
+    userID: number
+}
+export const unfollow = (userID: number): unfollowType => ({type: UNFOLLOW, userID});
+type setUsersType = {
+    type: typeof SET_USERS
+    users: Array<user>
+}
+export const setUsers = (users: Array<user>): setUsersType => ({type: SET_USERS, users});
+type changePageType = {
+    type: typeof CHANGE_PAGE
+    page: number
+}
+export const changePage = (page: number): changePageType => ({type: CHANGE_PAGE, page});
+type setUsersNumberType = {
+    type: typeof SET_USERS_NUMBER
+    usersNumber: number
+}
+export const setUsersNumber = (usersNumber: number): setUsersNumberType => ({type: SET_USERS_NUMBER, usersNumber});
+type fetchingShowPreloaderType = {
+    type: typeof FETCHING_SHOW_PRELOADER
+    preloader: boolean
+}
+export const fetchingShowPreloader = (preloader: boolean): fetchingShowPreloaderType => ({type: FETCHING_SHOW_PRELOADER, preloader});
+type disableBtnType = {
+    type: typeof DISABLE_BTN
+    disable: boolean
+    userID: number
+}
+export const disableBtn = (disable: boolean, userID: number): disableBtnType => ({type: DISABLE_BTN, disable, userID});
 
 //Initial State
 let initialState = {
-    users: [],
+    users: [] as Array<user>,
     usersNumber: 21,
     usersInPage: 5,
     currentPage: 1,
     showPreloader: false,
-    isDisableBtn: [],
+    isDisableBtn: [] as Array<number>,
 }
 
-const usersReducer = (state = initialState, action) => {
+type InitialState = typeof initialState
+
+const usersReducer = (state = initialState, action): InitialState => {
     let stateCopy = {...state};
     if (action.type === FOLLOW) {
 

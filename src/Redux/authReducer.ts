@@ -1,4 +1,5 @@
 import {authAPI, captchaAPI} from "../API/api";
+import {authDataType} from "../types/types";
 
 const SET_AUTH_DATA = 'auth/SET_AUTH_DATA';
 const SET_IS_AUTH = 'auth/SET_IS_AUTH';
@@ -6,17 +7,33 @@ const ERROR_AUTH = 'auth/ERROR_AUTH';
 const SET_CAPTCHA_URL = 'auth/SET_CAPTCHA_URL';
 
 //Action Creators
-export const setAuthData = (data) => ({type: SET_AUTH_DATA, data});
-export const setIsAuth = (isAuth) => ({type: SET_IS_AUTH, isAuth});
-export const errorAuth = (error) => ({type: ERROR_AUTH, error});
-export const setCaptchaUrl = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl});
+type setAuthDataType = {
+    type: typeof SET_AUTH_DATA
+    data: authDataType
+}
+export const setAuthData = (data: authDataType): setAuthDataType => ({type: SET_AUTH_DATA, data});
+type setIsAuthType = {
+    type: typeof SET_IS_AUTH
+    isAuth: boolean
+}
+export const setIsAuth = (isAuth: boolean): setIsAuthType => ({type: SET_IS_AUTH, isAuth});
+type errorAuthType = {
+    type: typeof ERROR_AUTH
+    error: Array<string>
+}
+export const errorAuth = (error: Array<string>): errorAuthType => ({type: ERROR_AUTH, error});
+type setCaptchaUrlType = {
+    type: typeof SET_CAPTCHA_URL
+    captchaUrl: string | null
+}
+export const setCaptchaUrl = (captchaUrl: string | null): setCaptchaUrlType => ({type: SET_CAPTCHA_URL, captchaUrl});
 
 //Initial State
 let initialState = {
-    authData: {id: null, login: null, email: null},
+    authData: {id: null, login: null, email: null} as authDataType,
     resultCode: false,
-    errorAuth: [],
-    captchaUrl: null
+    errorAuth: [] as Array<string>,
+    captchaUrl: null as string | null
 }
 
 const authReducer = (state = initialState, action) => {

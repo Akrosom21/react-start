@@ -1,4 +1,5 @@
-import {addDialogSymbolActionCreator, addDialogMessageActionCreator} from "../../Redux/messagesReduser";
+import {addDialogSymbol, addDialogMessage
+} from "../../Redux/messagesReduser";
 import Messages from "./Messages";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
@@ -16,10 +17,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         sendMessage: () => {
-            dispatch(addDialogMessageActionCreator());
+            dispatch(addDialogMessage());
         },
         changeMessageText: (messageText) => {
-            dispatch(addDialogSymbolActionCreator(messageText));
+            dispatch(addDialogSymbol(messageText));
         }
     }
 }

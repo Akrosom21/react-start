@@ -75,7 +75,7 @@ const profileReducer = (state = initialState, action): InitialState => {
         let newMessage = {
             message: state.postSymbol,
             avatar: avatar002,
-            id: 5
+            id: stateCopy.postData.length + 1
         }
         return {
             ...state,

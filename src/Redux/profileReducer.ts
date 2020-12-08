@@ -159,7 +159,7 @@ export const changeProfile = (profile: profile): thunkType => {
         const response = await profileAPI.updateProfile(profile)
         const userID = getState().auth.authData.id
         if (response.resultCode === 0) {
-            dispatch(getProfile(userID))
+            dispatch(getProfile(userID as number))
             dispatch(changeProfileError(response.messages))
             dispatch(editProfile(false))
         } else {

@@ -2,7 +2,7 @@ import React, {FC, useEffect } from "react";
 import Profile from "./Profile";
 import {connect, useSelector, useDispatch} from "react-redux";
 import {changeProfile, editProfile, getProfile, setStatus, updatePhoto, updateStatus} from "../../Redux/profileReducer";
-import {withRouter} from "react-router-dom";
+import {withRouter, useParams} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {compose} from "redux";
 import {AppRootReducer} from "../../Redux/reduxStore";
@@ -14,10 +14,7 @@ type mapDispatchType = {
     editProfile: (edit: boolean) => void
     changeProfile: (profile: profile) => void
 }
-type ownProps = {
-    match: {params: {userID: number}}
-}
-type propsType = mapDispatchType & ownProps
+type propsType = mapDispatchType
 
 const ProfileContainer: FC<propsType> = (props) => {
     const profile = useSelector((state: AppRootReducer) => state.profilePage.profile)
@@ -27,20 +24,20 @@ const ProfileContainer: FC<propsType> = (props) => {
     const isEdit = useSelector((state: AppRootReducer) => state.profilePage.isEdit)
     const changeProfileError = useSelector((state: AppRootReducer) => state.profilePage.changeProfileError)
     const dispatch = useDispatch()
+    let {userID} = useParams()
     useEffect(() => {
-        let withRouterUserID = props.match.params.userID
-        if (!withRouterUserID) {
-            withRouterUserID = authDataId
+        if (!userID) {
+            userID = authDataId
         }
-        dispatch(getProfile(withRouterUserID))
-        dispatch(setStatus(withRouterUserID))
-    },[props.match.params.userID])
+        dispatch(getProfile(userID))
+        dispatch(setStatus(userID))
+    },[userID])
     return (
         <Profile profile={profile}
                  profileStatus={profileStatus}
                  updateStatus={props.updateStatus}
                  updatePhoto={props.updatePhoto}
-                 isOwner={!props.match.params.userID}
+                 isOwner={!userID}
                  isEdit={isEdit}
                  editProfile={props.editProfile}
                  changeProfile={props.changeProfile}
@@ -58,8 +55,7 @@ const mapStateToProps = (state: AppRootReducer) => ({
     changeProfileError: state.profilePage.changeProfileError
 })
 
-export default compose<any>(connect<mapDispatchType, ownProps, AppRootReducer>(null,
+export default compose<any>(connect<mapDispatchType, AppRootReducer>(null,
         {getProfile, setStatus, updateStatus, updatePhoto, editProfile, changeProfile}),
-        withRouter,
         withAuthRedirect
 )(ProfileContainer)

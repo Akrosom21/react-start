@@ -25,11 +25,8 @@ type updateStatusType = {
     messages: Array<string>
     data: {}
 }
-type photosDataType = {
-    photos: photos
-}
 type updatePhotoType = {
-    data: photosDataType
+    data: {photos: photos}
     resultCode: number
     messages: Array<string>
 }

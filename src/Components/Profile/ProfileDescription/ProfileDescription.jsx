@@ -12,7 +12,7 @@ function ProfileDescription(props) {
     return (
         <div className={classes.profile__desc}>
             <div className={classes.profile__name}>{props.profile.fullName}</div>
-            <ProfileStatus profileStatus={props.profileStatus} updateStatus={props.updateStatus}/>
+            <ProfileStatus profileStatus={props.profileStatus} updateStatus={props.updateStatus} isOwner={props.isOwner}/>
             <div className={classes.profile__desc_text}>
                 <b>About Me:</b> <span>{props.profile.aboutMe}</span>
             </div>

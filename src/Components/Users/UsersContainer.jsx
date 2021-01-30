@@ -1,23 +1,25 @@
 import {connect} from "react-redux";
 import Users from "./Users";
-import {getUsers, getUsersPage, setFollow, setUnfollow} from "../../Redux/usersReducer";
+import {getUsers, getUsersPage, setFollow, setUnfollow, setUserFilter} from "../../Redux/usersReducer";
 import React from "react";
 import Preloader from "../Common/Preloader/Preloader";
+import UserFilter from "./UserFilter/UserFilter";
 
 class UsersContainer extends React.Component {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.usersInPage)
+        this.props.getUsers(this.props.currentPage, this.props.usersInPage, this.props.userFilter)
     }
 
     onChangePage = (page) => {
-        this.props.getUsersPage(page, this.props.usersInPage)
+        this.props.getUsersPage(page, this.props.usersInPage, this.props.userFilter)
     }
 
     render() {
         return (
             <>
                 {this.props.showPreloader ? <Preloader/> : null}
+                <UserFilter getUsersPage={this.props.getUsersPage} usersInPage={this.props.usersInPage}/>
                 <Users
                     usersNumber={this.props.usersNumber}
                     usersInPage={this.props.usersInPage}
@@ -28,7 +30,6 @@ class UsersContainer extends React.Component {
                     isDisableBtn={this.props.isDisableBtn}
                     setFollow={this.props.setFollow}
                     setUnfollow={this.props.setUnfollow}
-
                 />
             </>
         )
@@ -42,7 +43,8 @@ const mapStateToProps = (state) => {
         usersNumber: state.usersPage.usersNumber,
         currentPage: state.usersPage.currentPage,
         showPreloader: state.usersPage.showPreloader,
-        isDisableBtn: state.usersPage.isDisableBtn
+        isDisableBtn: state.usersPage.isDisableBtn,
+        userFilter: state.usersPage.userFilter
     }
 }
 

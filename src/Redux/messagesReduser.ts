@@ -39,9 +39,13 @@ const messagesReducer = (state = initialState, action: actionType): InitialState
             dialogSymbol: action.inputDialogSymbol,
         }
     } else if (action.type === dialogMessage) {
+        const newMessage = {
+            id: state.dialogData[state.dialogData.length - 1].id + 1,
+            message: stateCopy.dialogSymbol
+        }
         return {
             ...state,
-            dialogData: [...state.dialogData, {message: stateCopy.dialogSymbol, id: stateCopy.userData.length + 1}],
+            dialogData: [...state.dialogData, newMessage],
             dialogSymbol: '',
         }
     }

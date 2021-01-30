@@ -5,8 +5,8 @@ import { AppRootReducer } from "./reduxStore";
 const avatar001 = require("../img/ava.jfif");
 const avatar002 = require("../img/ava002.jfif");
 
-const addPost = 'profilePage/ADD-POST';
-const addSymbol = 'profilePage/ADD-SYMBOL';
+const ADD_POST = 'profilePage/ADD_POST';
+const ADD_SYMBOL = 'profilePage/ADD_SYMBOL';
 const SET_USER_PROFILE = 'profilePage/SET_USER_PROFILE';
 const SET_PROFILE_STATUS = 'profilePage/SET_PROFILE_STATUS';
 const SET_PROFILE_PHOTO = 'profilePage/SET_PROFILE_PHOTO';
@@ -15,14 +15,14 @@ const CHANGE_PROFILE_ERROR = 'profilePage/CHANGE_PROFILE_ERROR';
 
 //Action Creators
 type addPostActionCreatorType = {
-    type: typeof addPost
+    type: typeof ADD_POST
 }
-export const addPostActionCreator = (): addPostActionCreatorType => ({type: addPost});
+export const addPostActionCreator = (): addPostActionCreatorType => ({type: ADD_POST});
 type addSymbolActionCreatorType = {
-    type: typeof addSymbol
+    type: typeof ADD_SYMBOL
     inputSymbol: string
 }
-export const addSymbolActionCreator = (postText: string): addSymbolActionCreatorType => ({type: addSymbol, inputSymbol: postText});
+export const addSymbolActionCreator = (postText: string): addSymbolActionCreatorType => ({type: ADD_SYMBOL, inputSymbol: postText});
 type setUserProfileType = {
     type: typeof SET_USER_PROFILE
     profile: profile
@@ -75,18 +75,18 @@ type InitialState = typeof initialState
 
 const profileReducer = (state = initialState, action: actionType): InitialState => {
     let stateCopy = {...state};
-    if (action.type === addPost) {
+    if (action.type === ADD_POST) {
         let newMessage = {
             message: state.postSymbol,
             avatar: avatar002,
-            id: stateCopy.postData.length + 1
+            id: state.postData[state.postData.length - 1].id + 1,
         }
         return {
             ...state,
             postData: [...state.postData, newMessage],
             postSymbol: '',
         }
-    } else if (action.type === addSymbol) {
+    } else if (action.type === ADD_SYMBOL) {
         return {
             ...state,
             postSymbol: action.inputSymbol,

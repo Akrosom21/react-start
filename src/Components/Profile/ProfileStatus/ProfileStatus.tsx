@@ -2,6 +2,7 @@ import React, {FC, useEffect, useState} from "react";
 
 type propsType = {
     profileStatus: string
+    isOwner: boolean
     updateStatus: (status: string) => void
 }
 
@@ -22,7 +23,7 @@ const ProfileStatus: FC<propsType> = (props) => {
         setStatus(e.currentTarget.value)
     }
 
-    useEffect( () => {
+    useEffect(() => {
         setStatus(props.profileStatus)
     }, [props.profileStatus])
 
@@ -30,12 +31,20 @@ const ProfileStatus: FC<propsType> = (props) => {
         <>
             {editMode
                 ?
-                <div className="status__field">
-                    <b>Status: </b>
-                    <input onChange={onStatusChange} onBlur={deactivateEditMode} value={status}
-                           autoFocus={true} type="text"
-                           className="status__input"/>
-                </div>
+                props.isOwner
+                    ?
+                    <div className="status__field">
+                        <b>Status: </b>
+                        <input onChange={onStatusChange} onBlur={deactivateEditMode} value={status}
+                               autoFocus={true} type="text"
+                               className="status__input"/>
+                    </div>
+                    :
+                    <div className="status__text">
+                        <b>Status: </b>
+                        <span onDoubleClick={activateEditMode}
+                              className="status__item">{props.profileStatus}</span>
+                    </div>
                 :
                 <div className="status__text">
                     <b>Status: </b>

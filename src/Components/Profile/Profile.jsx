@@ -5,7 +5,6 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 
 function Profile(props) {
-
     return (
         <div className={classes.content}>
             <ProfileInfo updatePhoto={props.updatePhoto}

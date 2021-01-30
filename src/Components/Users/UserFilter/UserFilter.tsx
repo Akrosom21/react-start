@@ -3,7 +3,8 @@ import {Field, Form} from "react-final-form";
 
 function UserFilter(props) {
     const onSubmit = (values) => {
-        props.getUsersPage(1, props.usersInPage, values.user);
+        let userName = values.user ? values.user : ''
+        props.getUsersPage(1, props.usersInPage, userName);
     }
     return (
         <>

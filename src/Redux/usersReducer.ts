@@ -51,13 +51,18 @@ type disableBtnType = {
 export const disableBtn = (disable: boolean, userID: number): disableBtnType => ({type: DISABLE_BTN, disable, userID});
 type setUserFilterType = {
     type: typeof USER_FILTER,
-    userFilter: string
+    userFilter: string,
+    friend: boolean | string
 }
-export const setUserFilter = (userFilter: string): setUserFilterType => ({type: USER_FILTER, userFilter})
+export const setUserFilter = (userFilter: string, friend: boolean | string): setUserFilterType => ({type: USER_FILTER, userFilter, friend})
 
 type actionsType = followType | unfollowType | setUsersType | changePageType |
     setUsersNumberType | fetchingShowPreloaderType | disableBtnType | setUserFilterType
 //Initial State
+type userFilterType ={
+    term: string,
+    friend: boolean | string
+}
 let initialState = {
     users: [] as Array<user>,
     usersNumber: 21,
@@ -65,7 +70,10 @@ let initialState = {
     currentPage: 1,
     showPreloader: false,
     isDisableBtn: [] as Array<number>,
-    userFilter: ''
+    userFilter: {
+        term: '',
+        friend: ''
+    } as userFilterType
 }
 
 type InitialState = typeof initialState
@@ -124,7 +132,7 @@ const usersReducer = (state = initialState, action: actionsType): InitialState =
     else if (action.type === USER_FILTER) {
         return {
             ...state,
-            userFilter: action.userFilter
+            userFilter: {term: action.userFilter, friend: action.friend}
         }
     }
     return stateCopy;
@@ -133,22 +141,22 @@ const usersReducer = (state = initialState, action: actionsType): InitialState =
 //Thunk
 type thunkType =  ThunkAction<Promise<void>, AppRootReducer, any, actionsType>
 
-export const getUsers = (currentPage: number, usersInPage: number, term: string): thunkType => {
+export const getUsers = (currentPage: number, usersInPage: number): thunkType => {
     return async (dispatch) => {
         dispatch(fetchingShowPreloader(true))
-        const data = await userAPI.getUsers(currentPage, usersInPage, term)
+        const data = await userAPI.getUsers(currentPage, usersInPage)
         dispatch(fetchingShowPreloader(false))
         dispatch(setUsers(data.items))
         dispatch(setUsersNumber(data.totalCount))
     }
 }
 
-export const getUsersPage = (page: number, usersInPage: number, term: string): thunkType => {
+export const getUsersPage = (page: number, usersInPage: number, term: string, followed: boolean | string): thunkType => {
     return async (dispatch) => {
         dispatch(changePage(page))
         dispatch(fetchingShowPreloader(true))
-        dispatch(setUserFilter(term))
-        const data = await userAPI.getUsersPage(page, usersInPage, term)
+        dispatch(setUserFilter(term, followed))
+        const data = await userAPI.getUsersPage(page, usersInPage, term, followed)
         dispatch(fetchingShowPreloader(false))
         dispatch(setUsers(data.items))
         dispatch(setUsersNumber(data.totalCount))

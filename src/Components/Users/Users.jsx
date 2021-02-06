@@ -8,7 +8,7 @@ function Users(props) {
     let personal = props.usersArr.map((p) => (
         <Person key={p.id} userID={p.id} photo={p.photos.small} fullName={p.name} status={p.status}
                 country={'p.location.country'} city={'p.location.city'} followed={p.followed}
-                isDisableBtn={props.isDisableBtn} setFollow={props.setFollow} setUnfollow={props.setUnfollow}/>))
+                isDisableBtn={props.isDisableBtn}/>))
     return (
         <div className={classes.users}>
             <div className={classes.pagination}>

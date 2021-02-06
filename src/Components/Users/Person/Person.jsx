@@ -2,15 +2,18 @@ import React from "react";
 import classes from './Person.module.css'
 import profileImg from '../../../img/profile.png'
 import {NavLink} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setFollow, setUnfollow} from "../../../Redux/usersReducer";
 
 
 function Person(props) {
+    const dispatch = useDispatch()
 
     let follow = () => {
-        props.setFollow(props.userID)
+        dispatch(setFollow(props.userID))
     }
     let unfollow = () => {
-        props.setUnfollow(props.userID)
+        dispatch(setUnfollow(props.userID))
     }
     return (
         <div className="classes.person">

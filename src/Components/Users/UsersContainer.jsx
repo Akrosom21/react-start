@@ -1,79 +1,46 @@
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Users from "./Users";
-import {getUsers, getUsersPage, setFollow, setUnfollow, setUserFilter} from "../../Redux/usersReducer";
-import React from "react";
+import {getUsers, getUsersPage, setFollow, setUnfollow} from "../../Redux/usersReducer";
+import React, {useEffect} from "react";
 import Preloader from "../Common/Preloader/Preloader";
 import UserFilter from "./UserFilter/UserFilter";
 
-class UsersContainer extends React.Component {
+function UsersContainer () {
+    const usersArr = useSelector(state => state.usersPage.users)
+    const usersInPage = useSelector(state => state.usersPage.usersInPage)
+    const usersNumber = useSelector(state => state.usersPage.usersNumber)
+    const currentPage = useSelector(state => state.usersPage.currentPage)
+    const showPreloader = useSelector(state => state.usersPage.showPreloader)
+    const isDisableBtn = useSelector(state => state.usersPage.isDisableBtn)
+    const userFilter = useSelector(state => state.usersPage.userFilter)
 
-    componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.usersInPage, this.props.userFilter)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getUsers(currentPage, usersInPage))
+    }, [])
+
+    const onChangePage = (page) => {
+        dispatch(getUsersPage(page, usersInPage, userFilter.term, userFilter.friend))
     }
 
-    onChangePage = (page) => {
-        this.props.getUsersPage(page, this.props.usersInPage, this.props.userFilter)
-    }
-
-    render() {
         return (
             <>
-                {this.props.showPreloader ? <Preloader/> : null}
-                <UserFilter getUsersPage={this.props.getUsersPage} usersInPage={this.props.usersInPage}/>
+                {showPreloader ? <Preloader/> : null}
+                <UserFilter/>
                 <Users
-                    usersNumber={this.props.usersNumber}
-                    usersInPage={this.props.usersInPage}
-                    pagesArr={this.props.usersArr}
-                    onChangePage={this.onChangePage}
-                    currentPage={this.props.currentPage}
-                    usersArr={this.props.usersArr}
-                    isDisableBtn={this.props.isDisableBtn}
-                    setFollow={this.props.setFollow}
-                    setUnfollow={this.props.setUnfollow}
+                    usersNumber={usersNumber}
+                    usersInPage={usersInPage}
+                    pagesArr={usersArr}
+                    onChangePage={onChangePage}
+                    currentPage={currentPage}
+                    usersArr={usersArr}
+                    isDisableBtn={isDisableBtn}
+                    setFollow={setFollow}
+                    setUnfollow={setUnfollow}
                 />
             </>
         )
-    }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        usersArr: state.usersPage.users,
-        usersInPage: state.usersPage.usersInPage,
-        usersNumber: state.usersPage.usersNumber,
-        currentPage: state.usersPage.currentPage,
-        showPreloader: state.usersPage.showPreloader,
-        isDisableBtn: state.usersPage.isDisableBtn,
-        userFilter: state.usersPage.userFilter
-    }
-}
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         follow: (userID) => {
-//             dispatch(followAC(userID))
-//         },
-//         unfollow: (userID) => {
-//             dispatch(unfollowAC(userID))
-//         },
-//         setUsers: (users) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         changePage: (page) => {
-//             dispatch(changePageAC(page))
-//         },
-//         setUsersNumber: (usersNumber) => {
-//             dispatch(setUsersNumberAC(usersNumber))
-//         },
-//         fetchingShowPreloader: (preloader) => {
-//             dispatch(showPreloaderAC(preloader))
-//         }
-//     }
-// }
-
-export default connect(mapStateToProps, {
-    getUsers,
-    getUsersPage,
-    setFollow,
-    setUnfollow
-})(UsersContainer)
+export default UsersContainer

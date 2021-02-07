@@ -1,0 +1,22 @@
+.chat {
+    height: 400px;
+    overflow-y: auto;
+}
+
+.chat__user {
+    display: flex;
+    align-items: center;
+}
+
+.chat__img {
+    width: 30px;
+}
+
+.chat__name {
+    padding-left: 15px;
+}
+
+.chat__text {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}

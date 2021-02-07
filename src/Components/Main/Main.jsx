@@ -8,6 +8,7 @@ import Login from "../Login/Login";
 import {withSuspense} from "../../HOC/withSuspense";
 
 const MessagesContainer = React.lazy(() => import('../Messages/MessagesContainer'));
+const ChatPage = React.lazy(() => import('../Chat/ChatPage'));
 
 function Main(props) {
     return (
@@ -26,6 +27,10 @@ function Main(props) {
                     <Route
                         path="/messages"
                         render={(withSuspense(MessagesContainer))}
+                    />
+                    <Route
+                        path="/chat"
+                        render={(withSuspense(ChatPage))}
                     />
                     <Route path='/users' render={() => (<UsersContainer/>)}/>
                     <Route path='/login' render={() => (<Login/>)}/>

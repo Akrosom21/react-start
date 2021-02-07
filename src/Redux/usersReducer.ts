@@ -22,7 +22,7 @@ type unfollowType = {
     type: typeof UNFOLLOW
     userID: number
 }
-export const unfollow = (userID: number): unfollowType => ({type: UNFOLLOW, userID});
+export const unfollow = (userID: number ): unfollowType => ({type: UNFOLLOW, userID});
 type setUsersType = {
     type: typeof SET_USERS
     users: Array<user>

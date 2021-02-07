@@ -24,7 +24,7 @@ function UsersContainer () {
         let actualPage = currentPage
         let filtratedName = userFilter.term
         let filtratedFriend = userFilter.friend
-        if (parsed.page) actualPage = parsed.page
+        if (parsed.page) actualPage = Number(parsed.page)
         if (parsed.term) filtratedName = parsed.term
         if (parsed.friend) filtratedFriend = parsed.friend
         dispatch(getUsersPage(actualPage, usersInPage, filtratedName, filtratedFriend))

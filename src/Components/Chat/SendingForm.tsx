@@ -12,7 +12,7 @@ export function SendingForm(props) {
     return (
         <div>
             <textarea value={messageText} onChange={onMessageChange}></textarea>
-            <button onClick={onAddMessage}>Send</button>
+            <button onClick={onAddMessage} disabled={!props.readyStatus}>Send</button>
         </div>
     )
 }

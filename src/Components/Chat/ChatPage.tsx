@@ -21,10 +21,17 @@ function ChatPage() {
     const onAddMessage = (message) => {
         ws.send(message)
     }
+    //Disable button till websocket will be ready
+    const [readyStatus, setReadyStatus] = useState('')
+    useEffect(() => {
+         ws.addEventListener('open', () => {
+             setReadyStatus('ready')
+         })
+    })
     return (
         <div>
             <Chat messages={messages}/>
-            <SendingForm onAddMessage={onAddMessage}/>
+            <SendingForm onAddMessage={onAddMessage} readyStatus={readyStatus}/>
         </div>
     )
 }

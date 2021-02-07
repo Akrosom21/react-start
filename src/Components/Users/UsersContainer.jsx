@@ -1,9 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
 import Users from "./Users";
-import {getUsers, getUsersPage, setFollow, setUnfollow} from "../../Redux/usersReducer";
+import {getUsersPage, setFollow, setUnfollow} from "../../Redux/usersReducer";
 import React, {useEffect} from "react";
 import Preloader from "../Common/Preloader/Preloader";
 import UserFilter from "./UserFilter/UserFilter";
+import { useHistory } from "react-router-dom";
+import * as queryString from "querystring";
 
 function UsersContainer () {
     const usersArr = useSelector(state => state.usersPage.users)
@@ -15,10 +17,25 @@ function UsersContainer () {
     const userFilter = useSelector(state => state.usersPage.userFilter)
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     useEffect(() => {
-        dispatch(getUsers(currentPage, usersInPage))
+        const parsed = queryString.parse(history.location.search.substr(1))
+        let actualPage = currentPage
+        let filtratedName = userFilter.term
+        let filtratedFriend = userFilter.friend
+        if (parsed.page) actualPage = parsed.page
+        if (parsed.term) filtratedName = parsed.term
+        if (parsed.friend) filtratedFriend = parsed.friend
+        dispatch(getUsersPage(actualPage, usersInPage, filtratedName, filtratedFriend))
     }, [])
+
+    useEffect(()=> {
+        history.push({
+             pathname: '/users',
+            search: `?term=${userFilter.term}&friend=${userFilter.friend}&page=${currentPage}`
+        })
+    }, [userFilter, currentPage])
 
     const onChangePage = (page) => {
         dispatch(getUsersPage(page, usersInPage, userFilter.term, userFilter.friend))

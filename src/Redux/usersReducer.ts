@@ -141,16 +141,6 @@ const usersReducer = (state = initialState, action: actionsType): InitialState =
 //Thunk
 type thunkType =  ThunkAction<Promise<void>, AppRootReducer, any, actionsType>
 
-export const getUsers = (currentPage: number, usersInPage: number): thunkType => {
-    return async (dispatch) => {
-        dispatch(fetchingShowPreloader(true))
-        const data = await userAPI.getUsers(currentPage, usersInPage)
-        dispatch(fetchingShowPreloader(false))
-        dispatch(setUsers(data.items))
-        dispatch(setUsersNumber(data.totalCount))
-    }
-}
-
 export const getUsersPage = (page: number, usersInPage: number, term: string, followed: boolean | string): thunkType => {
     return async (dispatch) => {
         dispatch(changePage(page))

@@ -5,6 +5,8 @@ import { getUsersPage } from "../../../Redux/usersReducer";
 
 function UserFilter() {
     const usersInPage = useSelector(state => state.usersPage.usersInPage)
+    const term = useSelector(state => state.usersPage.userFilter.term)
+    const isFriend = useSelector(state => state.usersPage.userFilter.friend)
     const dispatch = useDispatch()
     const onSubmit = (values) => {
         let userName = values.user ? values.user : ''
@@ -15,6 +17,7 @@ function UserFilter() {
         <>
             <h2>Search</h2>
             <Form onSubmit={onSubmit}
+                  initialValues={{ user: term, followed: isFriend }}
                   render={({handleSubmit, form, submitting, pristine, values}) => (
                       <form onSubmit={handleSubmit}>
                           <div>

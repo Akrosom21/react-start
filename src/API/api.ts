@@ -60,11 +60,6 @@ type captchaType = {
 
 //API
 export const userAPI = {
-    getUsers(currentPage: number, usersInPage: number) {
-        return axiosInstance.get<getUsersType>(`users?page=${currentPage}&count=${usersInPage}`)
-            .then(response => response.data)
-    },
-
     getUsersPage(page: number, usersInPage: number, term: string, friend: boolean | string) {
         return axiosInstance.get<getUsersType>(`users?page=${page}&count=${usersInPage}&term=${term}&friend=${friend}`)
             .then(response => response.data)

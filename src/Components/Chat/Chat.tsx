@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import classes from '../Chat/Chat.module.css'
 
 export function Chat(props) {

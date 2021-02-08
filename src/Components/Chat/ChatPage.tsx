@@ -3,7 +3,6 @@ import {Chat} from "./Chat";
 import {SendingForm} from "./SendingForm";
 
 function ChatPage() {
-    const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
     type ChatMessagesType = {
         message: string,
         photo: string,
@@ -11,23 +10,38 @@ function ChatPage() {
         userName: string
     }
     const [messages, setMessages] = useState<ChatMessagesType[]>([])
+    const [ws, setWs] = useState<WebSocket | null> (null)
     //get messages
     useEffect(() => {
+        let wsChanel: WebSocket
+        const closeHendler = () => {
+            console.log('close')
+            setTimeout(createChanel, 3000)
+            setReadyStatus('')
+        }
         const getMessages = (e) => {
             let newMessages = JSON.parse(e.data)
             setMessages((prevMessages) => [...prevMessages, ...newMessages])
         }
-        ws.addEventListener('message', getMessages)
-
+        const createChanel = () => {
+            wsChanel && wsChanel.removeEventListener('close', closeHendler)
+            wsChanel && wsChanel.close()
+            wsChanel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+            wsChanel.addEventListener('close', closeHendler)
+            wsChanel.addEventListener('message', getMessages)
+            setWs(wsChanel)
+        }
+        createChanel()
         return ()=> {
-            ws.removeEventListener('message', getMessages)
-            ws.close()
+            wsChanel && wsChanel.removeEventListener('message', getMessages)
+            wsChanel && wsChanel.removeEventListener('close', closeHendler)
+            wsChanel && wsChanel.close()
         }
     }, [])
 
     //send new message
     const onAddMessage = (message) => {
-        ws.send(message)
+        ws && ws.send(message)
     }
 
     //Disable button till websocket will be ready
@@ -36,17 +50,14 @@ function ChatPage() {
         function changeStatus() {
             setReadyStatus('ready')
         }
-         ws.addEventListener('open', changeStatus)
+        ws && ws.addEventListener('open', changeStatus)
 
         return () => {
-            ws.removeEventListener('open', changeStatus)
+            ws && ws.removeEventListener('open', changeStatus)
         }
-    }, [])
+    }, [ws])
 
     //alert if connection was lost
-    useEffect(()=> {
-        ws.addEventListener('close', ()=> alert('connection was lost'))
-    }, [])
     return (
         <div>
             <Chat messages={messages}/>

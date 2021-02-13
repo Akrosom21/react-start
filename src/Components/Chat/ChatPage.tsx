@@ -14,7 +14,7 @@ function ChatPage() {
     //get messages
     useEffect(() => {
         let wsChanel: WebSocket
-        const closeHendler = () => {
+        const closeHandler = () => {
             console.log('close')
             setTimeout(createChanel, 3000)
             setReadyStatus('')
@@ -24,17 +24,18 @@ function ChatPage() {
             setMessages((prevMessages) => [...prevMessages, ...newMessages])
         }
         const createChanel = () => {
-            wsChanel && wsChanel.removeEventListener('close', closeHendler)
+            wsChanel && wsChanel.removeEventListener('close', closeHandler)
             wsChanel && wsChanel.close()
+            wsChanel && wsChanel.removeEventListener('message', getMessages)
             wsChanel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
-            wsChanel.addEventListener('close', closeHendler)
+            wsChanel.addEventListener('close', closeHandler)
             wsChanel.addEventListener('message', getMessages)
             setWs(wsChanel)
         }
         createChanel()
         return ()=> {
             wsChanel && wsChanel.removeEventListener('message', getMessages)
-            wsChanel && wsChanel.removeEventListener('close', closeHendler)
+            wsChanel && wsChanel.removeEventListener('close', closeHandler)
             wsChanel && wsChanel.close()
         }
     }, [])

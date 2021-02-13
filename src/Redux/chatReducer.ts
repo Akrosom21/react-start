@@ -48,25 +48,23 @@ const chatReducer = (state = initialState, action: actionType): InitialState => 
     }
     return stateCopy;
 }
-
+const getMessages = (dispatch) => (e) => {
+    let newMessages = JSON.parse(e.data)
+    dispatch(addMessages(newMessages))
+}
+const changeStatus = (dispatch) => () => {
+    dispatch(setReadyStatus(true))
+    console.log('open')
+}
+const closeHandler = (dispatch) => () => {
+    dispatch(setReadyStatus(false))
+    console.log('close')
+    setTimeout(connectChat, 3000)
+}
 //Thunk
 export const connectChat = () => {
     return (dispatch) => {
-        const getMessages = (e)  => {
-            let newMessages = JSON.parse(e.data)
-            dispatch(addMessages(newMessages))
-        }
-        const changeStatus = () => {
-            dispatch(setReadyStatus(true))
-            console.log('open')
-        }
-        const closeHandler = () => {
-            dispatch(setReadyStatus(false))
-            console.log('close')
-            setTimeout(connectChat, 3000)
-        }
-
-        chatAPI.createChanel(getMessages, changeStatus, closeHandler)
+        chatAPI.createChanel(getMessages(dispatch), changeStatus(dispatch), closeHandler(dispatch))
     }
 }
 export const sendMessage = (message) => {
@@ -76,19 +74,6 @@ export const sendMessage = (message) => {
 }
 export const disconnectChat = () => {
     return (dispatch) => {
-        const getMessages = (e)  => {
-            let newMessages = JSON.parse(e.data)
-            dispatch(addMessages(newMessages))
-        }
-        const changeStatus = () => {
-            dispatch(setReadyStatus(true))
-            console.log('open')
-        }
-        const closeHandler = () => {
-            dispatch(setReadyStatus(false))
-            console.log('close')
-            setTimeout(connectChat, 3000)
-        }
         chatAPI.disconnect(getMessages, changeStatus, closeHandler)
     }
 }

@@ -1,4 +1,4 @@
-let wsChanel;
+let wsChanel: WebSocket
 
 export const chatAPI = {
     createChanel (getMessages, changeStatus, closeHandler) {

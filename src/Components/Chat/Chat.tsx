@@ -1,7 +1,7 @@
 import React from "react";
 import classes from '../Chat/Chat.module.css'
 
-export function Chat(props) {
+export const Chat = (props) => {
     return (
         <div className={classes.chat}>
             {props.messages.map((message, index) => {
